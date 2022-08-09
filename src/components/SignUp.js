@@ -44,7 +44,10 @@ export default function SignUp() {
     return (
         <Container>
             <Left>
-
+                <span>linkr</span>
+                <p>
+                    save, share and discover the best links on the web
+                </p>
             </Left>
             <Rigth>
                 <Form $loading={loading} onSubmit={handleSignUpSubmit}>
@@ -59,7 +62,6 @@ export default function SignUp() {
                     </Link>
                 </Form>
             </Rigth>
-
         </Container>
     )
 }

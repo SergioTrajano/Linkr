@@ -1,11 +1,31 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
-import { useState} from "react"
+import { useState,useContext} from "react"
 import axios from "axios"
+import { AuthContext } from "../providers/AuthProvider"
 
 export function Login() {
     const navigate=useNavigate()
+    const {setUser}=useContext(AuthContext)
     const [loading,setLoading]=useState(false)
+
+    useEffect(()=>{
+        if(localStorage.getItem("logged-in")!==null){
+            setLoading(true)
+            const loginPost=JSON.parse(localStorage.getItem("logged_in"))
+            axios.post("https://back-projeto17-linkr.herokuapp.com/login",loginPost)
+            .then(elem=>{
+                setUser({
+                    token:elem.data.token,
+                    username:elem.data.username,
+                    pictureUrl:elem.data.pictureUrl
+                }, ()=>navigate('/timeline')
+                )
+                
+            })
+            .catch(()=>(alert("Dados não recuperados, faça login novamente"),setLoading(false)))
+        }
+    },[])
 
     function clearLoginInputs(){
         return {
@@ -25,11 +45,22 @@ export function Login() {
     function handleLoginSubmit(e){
         e.preventDefault()
         setLoading(true)
+        const loginPost={
+            email:postForm.email,
+            password:postForm.password
+        }
         setPostForm(clearLoginInputs)
 
-        const promise=axios.post("https://back-projeto17-linkr.herokuapp.com/login",postForm)
-        promise.then(()=>{
-            navigate('/timeline')
+        axios.post("https://back-projeto17-linkr.herokuapp.com/login",loginPost)
+        .then((elem)=>{
+            localStorage.setItem("logged_in",JSON.stringify(loginPost))
+            setUser({
+            token:elem.data.token,
+            username:elem.data.username,
+            pictureUrl:elem.data.pictureUrl
+            }, ()=>navigate('/timeline')
+            )
+            
         })
         .catch(erro=>{
             alert(`${erro.response.data.message}`);
