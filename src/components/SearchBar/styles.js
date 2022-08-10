@@ -10,11 +10,13 @@ const SearchBarContainer = styled.div`
     right: 0;
     width: 93%;
     margin-top: calc(45px + 72px + 10px);
+
     @media ${device.desktop} {
         width: 563px;
         position: relative;
         margin-top: 0;
     }
+
     .search-icon {
         width: 19.15px;
         height: 19.15px;
@@ -24,6 +26,7 @@ const SearchBarContainer = styled.div`
         position: absolute;
         right: 0;
         top: 0;
+
         @media ${device.desktop} {
             width: 21px;
             height: 21px;
@@ -42,11 +45,13 @@ const SearchBarDataResult = styled.div`
     z-index: -1;
     flex-direction: column;
     border-radius: 8px;
+
     a {
         margin-bottom: 16px;
         display: flex;
         align-items: center;
         cursor: pointer;
+
         p {
             margin-left: 12px;
             font-weight: 400;
@@ -54,16 +59,20 @@ const SearchBarDataResult = styled.div`
             font-size: 19px;
             font-family: var(--primary-font);
         }
+
     }
+
     a:first-child {
         margin-top: calc(45px + 14px / 2);
     }
+
     span {
         font-family: var(--primary-font);
         color: #c5c5c5;
         font-size: 19px;
         margin-left: 7px;
     }
+
 `;
 
 const UserImage = styled.div`
@@ -75,11 +84,13 @@ const UserImage = styled.div`
     background-size: cover;
     background-position: center;
 `;
+
 const SearchBarContainerInput = styled.div`
     position: relative;
     background-color: #e7e7e7;
     border-radius: 8px;
     min-width: 93%;
+
     .searchBar-input {
         width: 100%;
         height: 45px;
@@ -89,9 +100,11 @@ const SearchBarContainerInput = styled.div`
         background: var(--secondary-color);
         font-family: var(--primary-font);
         font-size: 17px;
+
         &:focus {
             outline: none;
         }
+
         &::placeholder {
             font-style: var(--primary-font);
             font-weight: 400;
@@ -101,6 +114,7 @@ const SearchBarContainerInput = styled.div`
                 font-size: 19px;
             }
         }
+        
         :focus::placeholder {
             color: transparent;
         }

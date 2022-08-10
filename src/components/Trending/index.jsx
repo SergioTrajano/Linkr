@@ -3,23 +3,23 @@ import * as S from "./style";
 
 export default function Trending(){
     return(<>
-    <Container>
-        <Title>
-            <TrendingTitle>trending</TrendingTitle>
+    <S.Container>
+        <S.Title>
+            <S.TrendingTitle>trending</S.TrendingTitle>
             
-        </Title>
-        <Hashtags>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-                <Hashtag>#aaaaaa</Hashtag>
-            </Hashtags>
-    </Container>
+        </S.Title>
+        <S.Hashtags>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+                <S.Hashtag>#aaaaaa</S.Hashtag>
+            </S.Hashtags>
+    </S.Container>
     </>)
 }
