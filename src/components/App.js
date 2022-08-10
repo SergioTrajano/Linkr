@@ -1,6 +1,7 @@
 import { BrowserRouter,Routes,Route} from "react-router-dom";
 import Timeline from "./Timeline";
 import GlobalStyles from "../GlobalStyles";
+
 export default function App() {
 
  
