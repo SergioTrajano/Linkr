@@ -37,6 +37,6 @@ background-color: #171717;
 border-radius: 16px;
 margin-top: 160px;
 @media(max-width: 841px) {
-   display: none;
+display: none;
   }
 `
