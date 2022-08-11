@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useNavigate } from "react-router-dom"
+import { useNavigate,Link } from "react-router-dom"
 import { useState} from "react"
 import axios from "axios"
 import { Form,Rigth,Left,Container } from "./Login"
@@ -35,7 +35,8 @@ export default function SignUp() {
             navigate('/')
         })
         .catch(erro=>{
-            alert(`${erro.response.data.message}`);
+            console.log(erro)
+            alert(`${erro.response.data}`);
             setLoading(false)
         })
 
@@ -56,11 +57,11 @@ export default function SignUp() {
                     <input type="text" placeholder="username" name="username" value={postForm.username} onChange={handleForm} required/>
                     <input type="url" placeholder="picture url" name="picture" value={postForm.picture} onChange={handleForm} required/>
                     <button type="submit">Sign Up</button>
-
-                    <Link to='/'>
-                        Switch back to login
-                    </Link>
                 </Form>
+                    <Link to='/'>
+                        Switch back to log in
+                    </Link>
+                
             </Rigth>
         </Container>
     )
