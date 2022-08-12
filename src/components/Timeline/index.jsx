@@ -1,12 +1,9 @@
-
 import Header from "../../components/Header";
 import UserPublish from "../UserPublish";
 import * as S from "./style";
 
 
 const Timeline = () => {
-  
-   
 
     return (
         <>
