@@ -1,4 +1,3 @@
-
 import Header from "../../components/Header";
 import UserPublish from "../UserPublish";
 import * as S from "./style";
@@ -6,8 +5,6 @@ import Trending from "../Trending/index.jsx";
 
 
 const Timeline = () => {
-  
-   
 
     return (
         <>
