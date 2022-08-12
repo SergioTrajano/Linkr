@@ -1,6 +1,7 @@
 import Header from "../../components/Header";
 import UserPublish from "../UserPublish";
 import * as S from "./style";
+import Trending from "../Trending/index.jsx";
 
 
 const Timeline = () => {
@@ -18,11 +19,14 @@ const Timeline = () => {
                         </S.UserPublishContainer>
                       
                     </S.PostsContainer>
+                    <Trending/>
                     <S.SidebarContainer>
                  
                     </S.SidebarContainer>
                 </S.ContentContainer>
+              
             </S.Main>
+          
         </>
     );
 };
