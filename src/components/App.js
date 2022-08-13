@@ -7,6 +7,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import { useState } from "react";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
+import HashTag from "./Hashtags/Hashtag.js";
 
 
 export default function App() {
