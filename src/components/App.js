@@ -8,6 +8,7 @@ import { useState } from "react";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import HashTag from "./Hashtags/Hashtag.jsx";
+import AppProvider from "../providers";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -15,6 +16,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+    <AppProvider>
       <AuthContext.Provider value={{ user, setUser }}>
         <GlobalStyles />
         <Routes>
@@ -28,6 +30,7 @@ export default function App() {
           </Route>
         </Routes>
       </AuthContext.Provider>
+      </AppProvider>
     </BrowserRouter>
   );
 }
