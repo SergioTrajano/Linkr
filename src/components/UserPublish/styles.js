@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import device from "../../utils/devicesSizes";
-
 export const ImageUser = styled.div`
     @media (max-width: 611px) {
         display: none;
