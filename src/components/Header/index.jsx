@@ -6,14 +6,14 @@ import { useState } from "react";
 import * as S from "./styles";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProvider";
+import UserContext from "../../contexts/UserContext";
 import DefaultIcon from '../../assets/DefaultIcon.png'
 
 
 
 const Header = () => {
 const [logoutScreen,setLogoutScreen]=useState(false)
-const {user,setUser}=useContext(AuthContext)
+const {user,setUser}=useContext(UserContext)
 const navigate=useNavigate()
 
 function showScreen(){

@@ -168,6 +168,48 @@ export const PostText = styled.p`
         line-height: 20px;
     }
 `;
+export const LinkBox = styled.a`
+    width: 100%;
+    margin-top: 20px;
+    text-decoration: none;
+    border: 1px solid #4d4d4d;
+    border-radius: 12px;
+    display: flex;
+    word-break: break-word;
+    div {
+        padding: 24px 19px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    h4 {
+        color: #cecece;
+        font-size: 18px;
+        line-height: 19px;
+    }
+    h5 {
+        color: #9b9595;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    h6 {
+        color: #cecece;
+        font-size: 11px;
+        line-height: 13px;
+    }
+    img {
+        width: 33%;
+        height: calc(width);
+        object-fit: fill;
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        object-fit: contain;
+    }
+    @media screen and (max-width: 1300px){
+        flex-wrap: wrap;
+    }
+`;
+
 
 export const PostInput = styled.input`
     width: 100%;

@@ -1,100 +1,119 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { PublishContext } from "../../providers/UserPublishProvider";
-import { LoadingContext } from "../../providers/LoadingProvider";
-import isLogged from "../../utils/isLogged";
-import getUserData from "../../utils/getUserData";
-
+import { useState, useContext } from "react";
+import axios from "axios";
 import * as S from "./styles";
+import UserContext from "../../contexts/UserContext";
 
-const UserPublish = () => {
- /*    const navigate = useNavigate();
-    const [pictureURL, setPictureUrl] = useState("");
-    useEffect(() => {
-        if (!isLogged()) navigate("/");
-        else setPictureUrl(getUserData().pictureURL);
-    }, []);
-    const { publishSubmit, response } = useContext(PublishContext);
-    const { update, setUpdate } = useContext(LoadingContext);
-    const [disabled, setDisabled] = useState(false);
-    const [boolean, setboolean] = useState(false);
+export default function SendPostCard({ getPosts,getTrending }) {
+    const {image, token } = useContext(UserContext);
+    const [url, setLink] = useState("");
+    const [article, setBody] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const [inputs, setInputs] = useState({
-        url: "",
-        article: "",
-    });
-    const formSubmit = (e) => {
-        setDisabled(true);
-        e.preventDefault();
-        const data = {
-            url: inputs.url,
-            article: inputs.article.length === 0 ? " " : inputs.article,
-        };
-        // missing send Token
-        publishSubmit(data);
-        setUpdate(!update);
-        setboolean(!boolean);
-        // eslint-disable-next-line no-undef
-        if (!response) {
-            setInputs({ url: "", article: "" });
+    console.log(token)
+    function findHashtags(searchText) {
+        var regexp = /(\s|^)\#\w\w+\b/gm;
+        let result = searchText.match(regexp);
+        if (result) {
+            result = result.map(function (s) {
+                return s.trim();
+            });
+            return result;
+        } else {
+            return [];
         }
-        setDisabled(false);
-    }; */
+    }
+    function removeDuplicates(arr) {
+        const uniqueHashtag = arr.reduce(function (newArray, currentValue) {
+            if (!newArray.includes(currentValue))
+                newArray.push(currentValue);
+            return newArray;
+        }, []);
+        return uniqueHashtag;
+    }
+
+    async function publish(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const hashtags = removeDuplicates(findHashtags(article));
+
+            const post = {
+                url,
+                article,
+                hashtags: hashtags,
+            };
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            await axios.post(
+                `https://back-projeto17-linkr.herokuapp.com/posts`,
+                post,
+                config
+            );
+            await getPosts();
+            await getTrending();
+            setLoading(false);
+            setLink("");
+            setBody("");
+        } catch (e) {
+            alert("Houve um erro ao publicar seu link");
+            console.log(e);
+            setLoading(false);
+        }
+    }
+
+    function contentButton() {
+        if (loading) {
+            return "Publishing...";
+        }
+        return "Publish";
+    }
+
     return (
         <S.BoxPublish>
-            <S.Container>
-                <S.Data>
-                    <S.ImageUser>
-                        {/* <img src={pictureURL} alt="img" /> */}
-                    </S.ImageUser>
-                    <S.Form /* onSubmit={formSubmit} className="Desk" */>
-                        <p>What are you going to share today?</p>
-                        <S.Inputs>
-                            <input
-                                type="url"
-                               /*  disabled={disabled} */
-                                className="inputUrl"
-                               /*  value={inputs.url}
-                                onChange={(e) => {
-                                    setInputs({
-                                        ...inputs,
-                                        url: e.target.value,
-                                    });
-                                }} */
-                                placeholder="  http://..."
-                                required
-                            ></input>
-                            <input
-                                type="text"
-                                /* disabled={disabled} */
-                                className="inputArticle"
-                               /*  value={inputs.article}
-                                onChange={(e) => {
-                                    setInputs({
-                                        ...inputs,
-                                        article: e.target.value,
-                                    });
-                                }} */
-                                placeholder="  Awesome article about #javascript"
-                            ></input>
-                        </S.Inputs>
-                        <S.Button>
-                            <button
-                                type="submit"
-                              /*   disabled={disabled} */
-                                className="PublishButton"
-                            >
-                               {/*  {disabled ? "Publishing..." : "Publish"} */}
-
-                               "Publish"
-                            </button>
-                        </S.Button>
-                    </S.Form>
-                </S.Data>
-            </S.Container>
-        </S.BoxPublish>
+        <S.Container>
+            <S.Data>
+                <S.ImageUser>
+                <img src={image} alt="img" />
+                </S.ImageUser>
+                <S.Form oonSubmit={publish}className="Desk">
+                    <p>What are you going to share today?</p>
+                    <S.Inputs>
+                        <input
+                            type="url"
+                            placeholder="  http://..."
+                            required
+                            onChange={(e) => setLink(e.target.value)}
+                            value={url}
+                            disabled={loading}
+                        ></input>
+                        
+                        <input
+                             name="text"
+                             rows="14"
+                             cols="10"
+                             wrap="soft"
+                             placeholder="Awesome article about #javascript"
+                             required
+                             onChange={(e) => setBody(e.target.value)}
+                             value={article}
+                             disabled={loading}
+                        ></input>
+                    </S.Inputs>
+                    <S.Button>
+                        <button
+                           disabled={loading}
+                           type="submit"
+                           className="PublishButton"
+                        >
+                           {contentButton()}
+                        </button>
+                    </S.Button>
+                </S.Form>
+            </S.Data>
+        </S.Container>
+    </S.BoxPublish>
     );
-};
-
-export default UserPublish;
+}
