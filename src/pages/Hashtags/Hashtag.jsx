@@ -8,8 +8,8 @@ export default function HashTag(){
 
 
     return(<>
-    <Header/>
-    <S.Main>
+            <Header/>
+            <S.Main>
                 <S.TimelineContainer>
                     {"hashtag"}
                     </S.TimelineContainer>
