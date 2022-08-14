@@ -1,10 +1,12 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
+
 /* import ReactHashtag from "react-hashtag"; */
 import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../contexts/UserContext";
+
 /* import animationDataLike from "../assets/like-icon.json"; */
 /* import animationDataDelete from "../assets/delete-icon.json"; */
 /* import { ReactTagify } from "react-tagify"; */
@@ -55,21 +57,21 @@ const tagStyle = {
     textAlign: "left",
     color: "#FAFAFA",
 };
-/* const [animationLikeState, setAnimationLikeState] = useState({
+const [animationLikeState, setAnimationLikeState] = useState({
     isStopped: false,
     isPaused: false,
     direction: -1,
 });
-const likeDefaultOptions = {
+/* const likeDefaultOptions = {
     loop: false,
     autoplay: false,
     animationData: animationDataLike,
     rendererSettings: {
         preserveAspectRatio: "xMidYMid slice",
     },
-}; */
-
-/* const [animationDeleteState, setAnimationDeleteState] = useState({
+};
+ */
+const [animationDeleteState, setAnimationDeleteState] = useState({
     isStopped: false,
     isPaused: false,
     direction: 1,
@@ -81,7 +83,7 @@ const likeDefaultOptions = {
         },
     ],
 });
- */
+
 /* const deleteDefaultOptions = {
     loop: false,
     autoplay: false,
@@ -95,8 +97,8 @@ const likeDefaultOptions = {
             callback: () => console.log("the animation completed:"),
         },
     ],
-};
- */
+}; */
+
 const normalAnimation = 1;
 const reverseAnimation = -1;
 const legendAlt = `${username} profile pic`;
@@ -168,7 +170,7 @@ function handleKeyPress(event) {
         });
 }
  */
-/* function addLike() {
+function addLike() {
     setAnimationLikeState({
         ...animationLikeState,
         isStopped: false,
@@ -186,8 +188,8 @@ function removeLike() {
 
     setLike(like - 1);
 }
- */
-/* function postLike() {
+
+function postLike() {
     if (animationLikeState.direction === 1) {
         const promisse = axios
             .delete(
@@ -211,7 +213,7 @@ function removeLike() {
             .catch((e) => console.log(e));
     }
 }
- */
+
 function reloadPage() {
     getPosts();
     getTrending();
@@ -219,7 +221,7 @@ function reloadPage() {
     setShow(false);
 }
 
-/* function removedPostSuccess(s) {
+function removedPostSuccess(s) {
     setAnimationDeleteState({ ...animationDeleteState, isPaused: false });
 }
 
@@ -228,8 +230,8 @@ function error(e) {
     setIsDisabled("");
     alert(e);
 }
- */
-/* function removePost() {
+
+function removePost() {
     setIsDisabled("disabled");
 
     const promisse = axios
@@ -239,7 +241,7 @@ function error(e) {
         )
         .then(() => removedPostSuccess())
         .catch((e) => error(e));
-} */
+}
     return (
         <S.Wrapper >
           <span>
@@ -269,7 +271,7 @@ function error(e) {
                          </S.PostText>
                         ) : (
                             <S.PostForm
-                        /*     onSubmit={(e) => updateBody(e)} */
+                          /*   onSubmit={(e) => updateBody(e)} */
                         >
                             <S.PostInput
                                  type="text"
