@@ -26,7 +26,7 @@ export default function App() {
           </Route>
           <Route element={<PrivateRoute auth={isAuthenticated} />}>
             <Route path="/timeline" element={<Timeline />} />
-            <Route path="/hashtags" element={<HashTag />} />
+            <Route path="/hashtags/:hashtag" element={<HashTag />} />
           </Route>
         </Routes>
       </AuthContext.Provider>

@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from "react-hashtag";
-
 import { ReactComponent as RepostIcon } from "../../assets/icons/repost.svg";
 import { AiOutlineComment as CommentsIcon } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
