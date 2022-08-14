@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 
+
 function Post(info){
     return(
         <S.Post>
@@ -72,5 +73,6 @@ export default function HashTag() {
             </S.ContentContainer>
 
         </S.Main>
+
     </>)
 }
