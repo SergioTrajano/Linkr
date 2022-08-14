@@ -5,12 +5,12 @@ import UserContext from "../../contexts/UserContext";
 import Header from "../../components/Header";
 import UserPublish from "../../components/UserPublish";
 import * as S from "./style";
-/* import Trending from "../../components/Trending/index.jsx";
- */
+import Trending from "../../components/Trending/index.jsx";
+
 const Timeline = () => {
     const { token, setImage, setName } = useContext(UserContext);
     const [posts, setPosts] = useState([]);
-  /*   const [trending, setTrending] = useState(""); */
+    const [trending, setTrending] = useState()
 
 
     async function getPosts() {
@@ -24,8 +24,8 @@ const Timeline = () => {
                 `https://back-projeto17-linkr.herokuapp.com/posts`,
                 config
             );
-           
-            setPosts(result.data.urlData);
+         
+            setPosts(result.data);
             setImage(result.data.pictureURL);
             setName(result.data.username);
             console.log(result.data)
@@ -38,21 +38,9 @@ const Timeline = () => {
     }
   
     useEffect(()=>{
-        getPosts()
-        
+        getPosts() 
     },[]);
-   
-   /*  async function getTrending() {
-        try {
-            const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/trending`);
-            setTrending(result.data);
-        } catch (e) {
-            alert(
-                "An error occured while trying to fetch the trending hashtags, please refresh the page"
-            );
-            console.log(e);
-        }
-    }  */
+ 
 
     function renderPosts() {
         if (posts) {
@@ -107,7 +95,7 @@ const Timeline = () => {
                         {renderPosts()}
                     </S.PostsContainer>
                     <S.SidebarContainer>
-                {/*      <Trending getTrending={getTrending}/>  */}
+                <Trending  setTrending={setTrending} trending={trending} /> 
                     </S.SidebarContainer>
                 </S.ContentContainer>
               

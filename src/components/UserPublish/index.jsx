@@ -57,6 +57,7 @@ export default function SendPostCard({ getPosts,getTrending }) {
             setLoading(false);
             setLink("");
             setBody("");
+            console.log("deu")
         } catch (e) {
             alert("Houve um erro ao publicar seu link");
             console.log(e);

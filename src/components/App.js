@@ -6,7 +6,7 @@ import UserPage from "../pages/UserPage/index.jsx";
 import GlobalStyles from "../GlobalStyles";
 import UserContext from "../contexts/UserContext.js";
 import { useState } from "react";
-
+import HashTag from "./Hashtags/Hashtag.jsx";
 
 
 export default function App() {
@@ -35,10 +35,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Register/>} />
             <Route path="/timeline" element={<Timeline />} />
-
             <Route path="/hashtags/:hashtag" element={<HashTag />} />
-        
-
             <Route path="/timeline/user/:id" element={<UserPage />} />
 
          

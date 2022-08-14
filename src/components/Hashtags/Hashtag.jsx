@@ -3,29 +3,13 @@ import Header from "../Header";
 import * as S from "./style";
 import Trending from "../Trending/index.jsx";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState  , useEffect} from "react";
+import Post from "../Post/index.jsx"
+import axios from "axios";
 
 
 
-function Post(info){
-    return(
-        <S.Post>
-        <S.infoUser>
-            <S.photoUser>
-                <S.imageUser></S.imageUser>
-                <ion-icon name="heart-outline"></ion-icon>
-                <h1>131 likes</h1>
-            </S.photoUser>
 
-        </S.infoUser>
-        <S.publishUser>
-            <S.userName><h1>Juvenal Juvêncio</h1></S.userName>
-            <S.article><h1>Muito maneiro esse tutorial de Material UI com React, deem uma olhada! #react #material</h1></S.article>
-            <S.link></S.link>
-        </S.publishUser>
-    </S.Post>
-    )
-}
 
 export default function HashTag() {
     const {hashtag}=useParams

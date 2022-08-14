@@ -1,10 +1,8 @@
 
 import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
-
 /* import ReactHashtag from "react-hashtag"; */
 import { useNavigate } from "react-router-dom";
-
 import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../contexts/UserContext";
@@ -143,7 +141,7 @@ function handleKeyPress(event) {
     }
 }
 
-/* function updateBody(e) {
+ function updateBody(e) {
     e.preventDefault();
 
 
@@ -171,7 +169,7 @@ function handleKeyPress(event) {
             alert(e);
         });
 }
- */
+ 
 function addLike() {
     setAnimationLikeState({
         ...animationLikeState,
@@ -273,7 +271,7 @@ function removePost() {
                          </S.PostText>
                         ) : (
                             <S.PostForm
-                          /*   onSubmit={(e) => updateBody(e)} */
+                            onSubmit={(e) => updateBody(e)} 
                         >
                             <S.PostInput
                                  type="text"

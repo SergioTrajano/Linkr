@@ -4,34 +4,22 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 
-export default function Trending(){
-
-    const [trending , setTrending]= useState([])
-    useEffect(()=>{
-
-        async function getTrendings(){
-           //  const config={
-              //   headers:{
-            //     authorization:`Bearer ${token}`
-               //  }
-             //}
-             try {
-                 
-                 
-                     const promise = await axios.get('https://back-projeto17-linkr.herokuapp.com/trending' , config )
-                     setTrending([...promise.data])   
-                   
-     
-             } catch (error) {
-                 console.log(error)
-            
-             }   
-         }
-         getTrendings()
-        
-     },[])
+export default function Trending(trending , setTrending){
+    
 
     
+    async function getTrending() {
+        try {
+            const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/trending`);
+            setTrending(result.data);
+        } catch (e) {
+            alert(
+                "An error occured while trying to fetch the trending hashtags, please refresh the page"
+            );
+            console.log(e);
+        }
+    }  
+  //  getTrending()
 
     return(<>
     <S.Container>
@@ -40,10 +28,8 @@ export default function Trending(){
             
         </S.Title>
         <S.Hashtags>
-               {trending.map(item=> <Link to={`hashtags/${item.name}`} >
-                 <S.Hashtag >{item.name}</S.Hashtag>
-                 </Link>
-                 )}   
+              
+           
             </S.Hashtags>
     </S.Container>
     </>)
