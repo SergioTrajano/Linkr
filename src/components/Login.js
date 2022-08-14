@@ -76,9 +76,8 @@ export function Login() {
             required
           />
           <button type="submit">Log In</button>
+          <Link to="/sign-up">First time? Create an account!</Link>
         </Form>
-
-        <Link to="/sign-up">First time? Create an account!</Link>
       </Rigth>
     </Container>
   );
@@ -121,7 +120,12 @@ export const Form = styled.form`
     background-color: #1877f2;
     margin-bottom: 18px;
   }
-
+  a {
+    font-size: 24px;
+    color: white;
+    text-decoration: underline;
+    pointer-events: ${(props) => (props.$loading ? "none" : "auto")};
+  }
   @media (max-width: 611px) {
     input,
     button {
@@ -149,11 +153,6 @@ export const Rigth = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  a {
-    font-size: 24px;
-    color: white;
-    text-decoration: underline;
-  }
   @media (max-width: 611px) {
     width: 100vw;
   }

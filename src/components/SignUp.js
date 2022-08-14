@@ -85,8 +85,8 @@ export default function SignUp() {
             required
           />
           <button type="submit">Sign Up</button>
+          <Link to="/">Switch back to log in</Link>
         </Form>
-        <Link to="/">Switch back to log in</Link>
       </Rigth>
     </Container>
   );
