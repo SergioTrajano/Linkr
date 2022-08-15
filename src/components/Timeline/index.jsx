@@ -68,6 +68,7 @@ const Timeline = () => {
                     username,
                     userId,
                     pictureURL,
+                    likes,
                 }) => (
                     <Post
                         key={postId}
@@ -76,12 +77,13 @@ const Timeline = () => {
                         urlTitle={urlTitle}
                         urlImage={urlImage}
                         urlDescription={urlDescription}
-                        name={username}
+                        username={username}
                         creatorId={userId}
                         pictureURL={pictureURL}
                         postId={postId}
                         setPosts={setPosts}
                         getPosts={getPosts} 
+                        likes={likes}
                     />
                 )
             );

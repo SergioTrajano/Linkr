@@ -8,7 +8,7 @@ import PrivateRoute from "./routes/PrivateRoute.js";
 import { Login } from "./Auth/Login.jsx";
 import SignUp from "./Auth/SignUp.jsx"
 import Timeline from "./Timeline/index.jsx";
-import UserPage from "./users/userComponent.js";
+import UserPage from "./Timeline/userComponent.js";
 import Header from "./Header/index.jsx";
 
 export default function App() {

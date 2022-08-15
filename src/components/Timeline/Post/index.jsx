@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 /* import { toast } from "react-toastify"; */
 import styled from "styled-components";
 import * as S from "./styles";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../../context/userContext.js";
@@ -20,7 +20,7 @@ export default function PostCard({
     urlTitle,
     urlImage,
     urlDescription,
-    name,
+    username,
     creatorId,
     pictureURL,
     likes,
@@ -30,11 +30,11 @@ export default function PostCard({
     getTrending,
 }) {
 
-    const { token, userId, setUserId,setLoad } = useContext(UserContext);
+    const { token, name } = useContext(UserContext);
     const [bodyValue, setBodyValue] = useState(article);
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
-    const [like, setLike] = useState(likes);
+    const [like, setLike] = useState(likes.length);
     const [show, setShow] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState("");
     const [isDisabled, setIsDisabled] = useState("");
@@ -49,7 +49,6 @@ export default function PostCard({
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
-
         },
     };
     
@@ -66,11 +65,11 @@ export default function PostCard({
     const [animationLikeState, setAnimationLikeState] = useState({
         isStopped: false,
         isPaused: false,
-        direction: -1,
+        direction: likes.some(e=> e.username === name) ? 1 : -1,
     });
     const likeDefaultOptions = {
         loop: false,
-        autoplay: false,
+        autoplay: likes.some(e => e.username === name),
         animationData: animationDataLike,
         rendererSettings: {
             preserveAspectRatio: "xMidYMid slice",
@@ -107,87 +106,27 @@ export default function PostCard({
 
     const normalAnimation = 1;
     const reverseAnimation = -1;
-    const legendAlt = `${name} profile pic`;
+    const legendAlt = `${username} profile pic`;
 
-   /*  useEffect(() => {
-        if (textEdit === true) {
-            inputRef.current.focus();
-        }
-
-        getLikes();
-    }, [textEdit]);  */
-
-    async function getLikes() {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        try {
-            const { data: result } = await axios.get(
-                `${process.env.REACT_APP_BASE_URL}/like/${postId}`,
-                config
-            );
-            setUserId(result?.userId);
-            if (result.isLiked === true) {
-                setAnimationLikeState({ ...animationLikeState, direction: 1 });
-            }
-        } catch (e) {
-            alert(
-                "An error occured while trying to fetch the posts, please refresh the page"
-            );
-
-            setTimeout(() => {
-                navigate("/");
-              }, 1000);
-
-            console.log(e);
-        }
-    }
-    
     function handleKeyPress(event) {
         if (event.key === "Escape") {
             setTextEdit(!textEdit);
         }
     }
 
-    function findHashtags(searchText) {
-        var regexp = /(\s|^)\#\w\w+\b/gm;
-        let result = searchText.match(regexp);
-        if (result) {
-            result = result.map(function (s) {
-                return s.trim();
-            });
-            return result;
-        } else {
-            return [];
-        }
-    }
-
-    function removeDuplicates(arr) {
-        const uniqueHashtag = arr.reduce(function (newArray, currentValue) {
-            if (!newArray.includes(currentValue)) newArray.push(currentValue);
-            return newArray;
-        }, []);
-        return uniqueHashtag;
-    }
-
     function updateBody(e) {
         e.preventDefault();
-        const hashtags = removeDuplicates(findHashtags(bodyValue));
 
         if (originalBody === bodyValue) {
             return setTextEdit(!textEdit);
         }
 
         setIsInputDisabled("disabled");
-        console.log(postId)
         const promise = axios
             .put(
                 `${process.env.REACT_APP_API_BASE_URL}/posts/${postId}`,
                 {
                     article: bodyValue,
-                    hashtags,
                 },
                 config
             )
@@ -226,7 +165,7 @@ export default function PostCard({
         if (animationLikeState.direction === 1) {
             const promise = axios
                 .delete(
-                    `${process.env.REACT_APP_API_BASE_URL}/`,
+                    `${process.env.REACT_APP_API_BASE_URL}/like/${postId}`,
                     config
                 )
 
@@ -236,7 +175,7 @@ export default function PostCard({
         } else {
             const promise = axios
                 .post(
-                    `${process.env.REACT_APP_API_BASE_URL}/`,
+                    `${process.env.REACT_APP_API_BASE_URL}/like/${postId}`,
                     {},
                     config
                 )
@@ -298,7 +237,9 @@ export default function PostCard({
             <S.PostContentContainer>
 
             <S.PostUserName>
-             <h3>{name}</h3> 
+             <Link to={`/user/${creatorId}`}>
+                <h3 >{username}</h3>
+             </Link>
              
                      <S.IconsContainer  >
 
