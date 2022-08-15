@@ -20,8 +20,11 @@ export default function Trending( ){
           
         }
     }  
-   
+    useEffect(()=>{
         getTrending()
+    },[])
+   
+      
    async function getHashtagByName(){
     
    }

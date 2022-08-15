@@ -6,7 +6,7 @@ import SendPostCard from "../../components/UserPublish";
 import Header from "../../components/Header";
 import * as S from "./style";
 import Trending from "../../components/Trending/index.jsx";
-
+ 
 const Timeline = () => {
     const { token,setImage, setName } = useContext(UserContext);
     const [posts, setPosts] = useState("");
@@ -49,30 +49,32 @@ const Timeline = () => {
         if (posts) {
             const timeline = posts.map(
                 ({
-                    id,
-                    username,
-                    pictureURL,
+                    postId,
                     url,
                     article,
-                    titleUrl,
-                    imageUrl,
-                    descriptionUrl,
+                    urlTitle,
+                    urlImage,
+                    urlDescription,
+                    username,
                     userId,
+                    pictureURL,
+                  
                     like
                 }) => (
                     <Post
-                        key={id}
-                        name={username}
-                        pictureURL={pictureURL}
+                        key={postId}
                         url={url}
                         article={article}
-                        titleUrl={titleUrl}
-                        imageUrl={imageUrl}
-                        descriptionUrl={descriptionUrl}
+                        urlTitle={urlTitle}
+                        urlImage={urlImage}
+                        urlDescription={urlDescription}
+                        name={username}
+                        creatorId={userId}
+                        pictureURL={pictureURL}
                     /*     likes={like} */
 
-                        postId={id}
-                        creatorId={userId}
+                        postId={postId}
+                      
                         setPosts={setPosts}
                         getPosts={getPosts} 
                     /*     getTrending={getTrending} */
@@ -97,7 +99,7 @@ const Timeline = () => {
                         </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
-                    <Trending /> 
+                    <Trending />
                     <S.SidebarContainer>
                
                     </S.SidebarContainer>

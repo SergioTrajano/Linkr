@@ -12,20 +12,20 @@ import UserContext from "../../contexts/UserContext";
 import animationDataLike from "../assets/like-icon.json";
 import animationDataDelete from "../assets/delete-icon.json";
 
-/* import { ReactTagify } from "react-tagify"; */
+import { ReactTagify } from "react-tagify"; 
 
 export default function PostCard({
     key,
-    name,
-    pictureURL,
     url,
     article,
-    titleUrl,
-    imageUrl,
-    descriptionUrl,
+    urlTitle,
+    urlImage,
+    urlDescription,
+    name,
+    creatorId,
+    pictureURL,
     likes,
     postId,
-    creatorId,
     setPosts,
     getPosts,
     getTrending,
@@ -185,7 +185,7 @@ export default function PostCard({
 
         const promisse = axios
             .put(
-                `${process.env.REACT_APP_BASE_URL}/timeline/${postId}`,
+                `https://back-projeto17-linkr.herokuapp.com/posts/${postId}`,
                 {
                     bodyValue,
                     hashtags,
@@ -297,34 +297,71 @@ export default function PostCard({
             </ProfilePhoto>
           
             <S.PostContentContainer>
+
             <S.PostUserName>
              <h3>{name}</h3> 
-             <S.IconsContainer  >
+             
+                     <S.IconsContainer  >
 
-                                <TiPencil
-                                    
-                                    className="icon-post"
-                                />
-                            
-                                <FaTrash
-                                   
-                                    className="icon-post"
-                                />
-             </S.IconsContainer>  
-            </S.PostUserName>
+                     <TiPencil
+                         onClick={() => setTextEdit(!textEdit)}
+                         className="icon-post"
+                     />
+                 
+                     <FaTrash
+                        
+                         className="icon-post"
+                     />
+                    </S.IconsContainer>  
+               
+
+             </S.PostUserName>
+             {textEdit === false ? (
+                    <ReactTagify
+                        tagStyle={tagStyle}
+                        tagClicked={(tag) => {
+                            const tagWithoutHash = tag.replace("#", "");
+                            navigate(`/hashtag/${tagWithoutHash}`);
+                        }}
+                    >
+                        <p>{originalBody}</p>
+                    </ReactTagify>
+                ) : (
+                    <form onSubmit={(e) => updateBody(e)}>
+                   
+                        <input
+                            type="text"
+                            ref={inputRef}
+                            placeholder="Awesome article about #javascript"
+                            onChange={(e) => setBodyValue(e.target.value)}
+                            value={bodyValue}
+                            disabled={isInputDisabled}
+                            onKeyUpCapture={(e) => handleKeyPress(e)}
+                            required
+                        ></input>
+                   
+                    
+                </form>
+                )}
+               
+           
+          
+
+
+
                 <S.PostLinkPreviewContainer href={url} target="_blank">
                             <S.PostLinkContent>
                                 <span>
                                     <S.PostLinkTitle>
-                                        {titleUrl}
+                                        {urlTitle}
                                     </S.PostLinkTitle>
                                     <S.PostLinkDescription>
-                                        {descriptionUrl}
+                                        { urlDescription}
                                     </S.PostLinkDescription>
                                 </span>
                                 <S.PostLinkUrl>{url}</S.PostLinkUrl>
                             </S.PostLinkContent>
-                            <S.PostLinkImage src={imageUrl} alt={titleUrl}/>
+                            <S.PostLinkImage src={urlImage} alt={urlTitle}/>
                 </S.PostLinkPreviewContainer>
 
                 </S.PostContentContainer>

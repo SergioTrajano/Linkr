@@ -12,25 +12,28 @@ import axios from "axios";
 
 
 export default function HashTag() {
-    const {hashtag}=useParams
+    const {hashtag}=useParams()
     console.log(hashtag)
-    
-    const [info , setInfo]=useState(null)
 
-    useEffect(() => {
-        const URL = `https://back-projeto17-linkr.herokuapp.com/hashtag/${hashtag}`;
-        const promise = axios.get(URL);
-    
-        promise.then(response => {
-          const { data } = response;
-          setInfo(data);
-        });
-    
-        promise.catch(err => {
-          const message = err.response.statusText;
-          alert(message);
-        });
-      }, []);
+    const [info , setInfo]=useState([])
+
+    async function getPostsByHashtag() {
+        try {
+            const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/hashtag/${hashtag}`);
+          
+            setInfo(result.data);
+            console.log(result.data)
+           
+        } catch (e) {
+            console.log(e);
+          
+          
+        }
+    }  
+useEffect(()=>{
+    getPostsByHashtag()
+},[])
+   
 
 
     return (<>
@@ -47,8 +50,10 @@ export default function HashTag() {
 
                     </S.UserData>
                     <S.UserPublishContainer>
-                    <Post info={info} />
-                       
+                 
+              
+
+
                     </S.UserPublishContainer>
 
                 </S.PostsContainer>
