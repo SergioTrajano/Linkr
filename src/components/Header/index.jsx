@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar/index.jsx";
 import { useState } from "react";
 import * as S from "./styles";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import UserContext from "../../context/userContext.js";
 
 const Header = () => {
@@ -29,7 +29,9 @@ const Header = () => {
             if (logoutScreen) setLogoutScreen(false)
         }}>
             <S.Header>
-                <S.Logo >linkr</S.Logo>
+                <Link to="/timeline">
+                    <S.Logo >linkr</S.Logo>
+                </Link>
                 <SearchBar />
                 <S.UserContainer>
                     <S.UserOptionsContainer>

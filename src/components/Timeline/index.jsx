@@ -23,7 +23,6 @@ const Timeline = () => {
             );
            
             setPosts(result.data);
-            console.log(result.data)
 
         } catch (e) {
             alert(
@@ -45,7 +44,6 @@ const Timeline = () => {
             );
            result.then((res) => {
             setPosts(res.data);
-            console.log(res.data)
            });
         result.catch((e) => {
             alert(

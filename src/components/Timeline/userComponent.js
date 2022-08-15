@@ -21,13 +21,10 @@ export default function User() {
                 Authorization: `Bearer ${token}`
             }
         };
-        console.log(userId)
         const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${userId}`, config);
         console.log("to aqui")
         promise.then(response => {
             setUserPosts(response.data);
-            console.log(response.data)
-            console.log("cheguei")
         });
 
         
@@ -43,7 +40,6 @@ export default function User() {
         
         promise2.then(response => {
             setUserData(response.data[0]);
-            console.log(response.data)
         })
     }, [token, userId]);
 
@@ -60,7 +56,6 @@ export default function User() {
             );
            
             setUserPosts(result.data);
-            console.log(result.data)
 
         } catch (e) {
             alert(

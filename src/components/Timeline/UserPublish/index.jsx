@@ -17,7 +17,6 @@ export default function SendPostCard({ getPosts }) {
                 url,
                 article,
             };
-            console.log(post)
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
