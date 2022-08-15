@@ -128,6 +128,10 @@ export const PostUserName = styled.div`
     color: var(--secondary-color);
     margin-bottom: 7px;
     cursor: pointer;
+
+    h3 {
+        cursor: pointer;
+    }
     @media ${device.desktop} {
         font-size: 19px;
         line-height: 23px;

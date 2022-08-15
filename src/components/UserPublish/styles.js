@@ -34,6 +34,7 @@ export const Inputs = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-top: 5px;
 `;
 export const BoxPublish = styled.div`
     display: flex;
