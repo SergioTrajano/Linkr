@@ -3,11 +3,13 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext.js";
 
 export default function PublicRoute({ auth }) {
-  const { setToken, setImage, setName } = useContext(UserContext);
+  const { token, setToken, setImage, setName } = useContext(UserContext);
   const parseAuth = JSON.parse(auth);
-  setName(parseAuth.name);
-  setToken(parseAuth.token);
-  setImage(parseAuth.image);
-
+  console.log(token);
+  if (auth) {
+    setName(parseAuth.name);
+    setToken(parseAuth.token);
+    setImage(parseAuth.image);
+  }
   return auth ? <Navigate to="/timeline" /> : <Outlet />;
 }

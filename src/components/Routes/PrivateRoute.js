@@ -5,10 +5,12 @@ import UserContext from "../../contexts/UserContext.js";
 export default function PrivateRoute({ auth }) {
   const { token, setToken, setImage, setName } = useContext(UserContext);
   const parseAuth = JSON.parse(auth);
-  if (!token) {
+  if (auth && !token) {
     setName(parseAuth.name);
     setToken(parseAuth.token);
     setImage(parseAuth.image);
   }
-  return auth ? <Outlet /> : <Navigate to="/" />;
+  if (!auth) return <Navigate to="/" />;
+  if (auth && token) return <Outlet />;
+  return <></>;
 }

@@ -8,7 +8,8 @@ import * as S from "./style";
 /* import Trending from "../../components/Trending/index.jsx";
  */
 const Timeline = () => {
-    const { token, setImage, setName } = useContext(UserContext);
+    const { token } = useContext(UserContext);
+    console.log(token)
     const [posts, setPosts] = useState([]);
   /*   const [trending, setTrending] = useState(""); */
 
@@ -26,9 +27,6 @@ const Timeline = () => {
             );
            
             setPosts(result.data);
-            setImage(result.data.pictureURL);
-            setName(result.data.username);
-            console.log(result.data)
         } catch (e) {
             alert(
                 "An error occured while trying to fetch the posts, please refresh the page"
@@ -92,7 +90,6 @@ const Timeline = () => {
         if (posts === []) return <span>There are no posts yet</span>;
         return <span>Loading...</span>;
     }
-    console.log(renderPosts())
     return (
         <>
             <Header />

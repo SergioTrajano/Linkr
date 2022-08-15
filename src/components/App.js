@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import Timeline from "../pages/Timeline/index.jsx";
-import Register from "../pages/Auth/SignUp/SignUp.jsx";
-import Login from "../pages/Auth/Login/Login.jsx";
+import SignUp from "../pages/Auth/SignUp/SignUp.jsx";
+import { Login } from "../pages/Auth/Login/Login.jsx";
 import UserPage from "../pages/UserPage/index.jsx";
 import GlobalStyles from "../GlobalStyles";
 import UserContext from "../contexts/UserContext.js";
-import { useState } from "react";
+import PrivateRoute from "../components/Routes/PrivateRoute";
+import PublicRoute from "../components/Routes/PublicRoute";
 
 export default function App() {
   const [token, setToken] = useState("");
