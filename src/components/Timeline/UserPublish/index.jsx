@@ -69,6 +69,7 @@ export default function SendPostCard({ getPosts }) {
                         
                         <input
                             type="text"
+                            maxLength={150}
                              placeholder="Awesome article about #javascript"
                              className="inputArticle"
                              onChange={(e) => setArticle(e.target.value)}

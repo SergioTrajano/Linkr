@@ -94,7 +94,6 @@ const Timeline = () => {
     }
     return (
             <S.Main>
-                <S.TimelineContainer>{"timeline"}</S.TimelineContainer>
                 <S.ContentContainer>
                     <S.PostsContainer>
                         <S.UserData>timeline</S.UserData>
@@ -107,7 +106,6 @@ const Timeline = () => {
                     <S.SidebarContainer>
                     </S.SidebarContainer>
                 </S.ContentContainer>
-              
             </S.Main>
     );
 };

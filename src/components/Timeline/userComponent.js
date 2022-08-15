@@ -15,16 +15,19 @@ export default function User() {
     
 
     useEffect(() => {
+        console.log("to dentro")
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         };
+        console.log(userId)
         const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${userId}`, config);
-
+        console.log("to aqui")
         promise.then(response => {
             setUserPosts(response.data);
             console.log(response.data)
+            console.log("cheguei")
         });
 
         
@@ -39,23 +42,82 @@ export default function User() {
         const promise2 = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users?userId=${userId}`, config);
         
         promise2.then(response => {
-            setUserData(response.data);
+            setUserData(response.data[0]);
             console.log(response.data)
         })
-    }, [token, userId])
+    }, [token, userId]);
 
+    async function getPosts() {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const result = await axios.get(
+                `${process.env.REACT_APP_API_BASE_URL}/posts`,
+                config
+            );
+           
+            setUserPosts(result.data);
+            console.log(result.data)
+
+        } catch (e) {
+            alert(
+                "An error occured while trying to fetch the posts, please refresh the page"
+            );
+            console.log(e);
+        }
+    }
+
+    function renderPosts() {
+        if (userPosts.length) {
+            const timeline = userPosts.map(
+                ({
+                    postId,
+                    url,
+                    article,
+                    urlTitle,
+                    urlImage,
+                    urlDescription,
+                    username,
+                    userId,
+                    pictureURL,
+                    likes,
+                }) => (
+                    <Post
+                        key={postId}
+                        url={url}
+                        article={article}
+                        urlTitle={urlTitle}
+                        urlImage={urlImage}
+                        urlDescription={urlDescription}
+                        username={username}
+                        creatorId={userId}
+                        pictureURL={pictureURL}
+                        postId={postId}
+                        setPosts={setUserPosts}
+                        getPosts={getPosts} 
+                        likes={likes}
+                    />
+                )
+            );
+            return timeline;
+        }
+        if (!userPosts.length) return <span>There are no posts yet</span>;
+        return <span>Loading...</span>;
+    }
 
     return (
         <>
             <S.Main>
-                <S.TimelineContainer>{userData ? userData.username : ""}</S.TimelineContainer>
                 <S.ContentContainer>
                     <S.PostsContainer>
                         <S.UserData>{userData ? userData.username : ""}</S.UserData>
-                        {userPosts.length ? 
-                        <Post 
-                            
-                        /> : <></>}
+                        <S.UserPublishContainer>
+                        
+                        </S.UserPublishContainer>
+                        {renderPosts()}
                     </S.PostsContainer>
                     <Trending />
                     <S.SidebarContainer>

@@ -27,7 +27,6 @@ export default function PostCard({
     postId,
     setPosts,
     getPosts,
-    getTrending,
 }) {
 
     const { token, name } = useContext(UserContext);
@@ -134,7 +133,6 @@ export default function PostCard({
                 setOriginalBody(bodyValue);
                 setTextEdit(!textEdit);
                 setIsInputDisabled("");
-                getTrending();
             })
         promise.catch((e) => {
                 setIsInputDisabled("");
@@ -188,7 +186,6 @@ export default function PostCard({
 
     function reloadPage() {
         getPosts();
-        getTrending();
         setIsDisabled("");
         setShow(false);
     }
@@ -244,7 +241,7 @@ export default function PostCard({
                      <S.IconsContainer  >
 
                      <TiPencil
-                         onClick={() => setTextEdit(!textEdit)}
+                         onClick={() => {if(name===username) setTextEdit(!textEdit)}}
                          className="icon-post"
                      />
                  
@@ -264,12 +261,12 @@ export default function PostCard({
                             navigate(`/hashtag/${tagWithoutHash}`);
                         }}
                     >
-                        <p>{originalBody}</p>
+                        <p style={{color: "#9B9595"}}>{originalBody}</p>
                     </ReactTagify>
                 ) : (
-                    <form onSubmit={(e) => updateBody(e)}>
+                    <S.PostForm onSubmit={(e) => updateBody(e)}>
                    
-                        <input
+                        <S.PostInput
                             type="text"
                             ref={inputRef}
                             placeholder="Awesome article about #javascript"
@@ -278,10 +275,8 @@ export default function PostCard({
                             disabled={isInputDisabled}
                             onKeyUpCapture={(e) => handleKeyPress(e)}
                             required
-                        ></input>
-                   
-                    
-                </form>
+                        />
+                </S.PostForm>
                 )}
                
            

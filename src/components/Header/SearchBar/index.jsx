@@ -11,7 +11,7 @@ import UserContext from "../../../context/userContext";
 const SearchBar = () => {
     const { token } = useContext(UserContext);
     const [serachResult, setSearchResult] = useState([]);
-    const [inputValue, setInputValue] = useState("");
+
  
     return (
         <S.SearchBarContainer>
@@ -19,7 +19,6 @@ const SearchBar = () => {
                 <DebounceInput
                     minLength={3}
                     debounceTimeout={300}
-                    value={inputValue}
                     onChange={event => {
                         const config = {
                             headers: {
@@ -28,7 +27,6 @@ const SearchBar = () => {
                         };
                         console.log(event.target.value)
                         const promise = axios.get(`http://localhost:4000/users?name=${event.target.value}`, config);
-                        setInputValue("");
                         promise.then(response => {
                             setSearchResult(response.data);
                         });
@@ -41,10 +39,10 @@ const SearchBar = () => {
                 <AiOutlineSearch className="search-icon" />
             </S.SearchBarContainerInput>
             <S.SearchBarDataResult>
-                {serachResult.map((c, i) => <Link key={i} to={`/user/${c.id}`} onClick={() => {setSearchResult([]); setInputValue("")}}>
+                {serachResult.length ? serachResult.map((c, i) => <Link key={i} to={`/user/${c.id}`} onClick={() => setSearchResult([])}>
                     <S.UserImage src={`${c.pictureURL}`}></S.UserImage>
                     <p>{c.username}</p>
-                </Link>)}
+                </Link>) : <></>}
             </S.SearchBarDataResult>
         </S.SearchBarContainer>
     );
