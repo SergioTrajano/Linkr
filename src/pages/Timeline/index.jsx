@@ -5,8 +5,8 @@ import UserContext from "../../contexts/UserContext";
 import SendPostCard from "../../components/UserPublish";
 import Header from "../../components/Header";
 import * as S from "./style";
-/* import Trending from "../../components/Trending/index.jsx";
- */
+import Trending from "../../components/Trending/index.jsx";
+ 
 const Timeline = () => {
     const { token,setImage, setName } = useContext(UserContext);
     const [posts, setPosts] = useState("");
@@ -60,7 +60,7 @@ const Timeline = () => {
         if (posts) {
             const timeline = posts.map(
                 ({
-                    id,
+                    postId,
                     url,
                     article,
                     urlTitle,
@@ -73,7 +73,7 @@ const Timeline = () => {
                     like
                 }) => (
                     <Post
-                        key={id}
+                        key={postId}
                         url={url}
                         article={article}
                         urlTitle={urlTitle}
@@ -84,7 +84,7 @@ const Timeline = () => {
                         pictureURL={pictureURL}
                     /*     likes={like} */
 
-                        postId={id}
+                        postId={postId}
                       
                         setPosts={setPosts}
                         getPosts={getPosts} 
@@ -110,6 +110,7 @@ const Timeline = () => {
                         </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
+                    <Trending />
                     <S.SidebarContainer>
                 {/*      <Trending getTrending={getTrending}/>  */}
                     </S.SidebarContainer>
