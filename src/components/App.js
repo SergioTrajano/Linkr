@@ -10,6 +10,7 @@ import SignUp from "./Auth/SignUp.jsx"
 import Timeline from "./Timeline/index.jsx";
 import UserPage from "./Timeline/userComponent.js";
 import Header from "./Header/index.jsx";
+import HashTag from "./Hashtags/Hashtag.jsx";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="/sign-up" element={<SignUp />} />
           </Route>
           <Route element={<PrivateRoute auth={localStorage.getItem("isLogged")}/>}>
+            <Route path="/hashtag/:hashtag" element={<HashTag />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/user/:id" element={<UserPage />} />
           </Route>
