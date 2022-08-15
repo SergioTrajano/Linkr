@@ -7,7 +7,7 @@ import PublicRoute from "./routes/PublicRoute.js";
 import PrivateRoute from "./routes/PrivateRoute.js";
 import { Login } from "./Auth/Login.jsx";
 import SignUp from "./Auth/SignUp.jsx"
-import Timeline from "./timeline/timeLineComponent.js";
+import Timeline from "./Timeline/index.jsx";
 import UserPage from "./users/userComponent.js";
 import Header from "./Header/index.jsx";
 
