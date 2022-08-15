@@ -334,6 +334,7 @@ height: 100%;
         object-fit: cover;
     }
     h6 {
+        
         color: #b6b6b6;
         text-align: center;
     }
