@@ -15,16 +15,16 @@ import animationDataDelete from "../assets/delete-icon.json";
 
 export default function PostCard({
     key,
-    name,
-    pictureURL,
     url,
     article,
-    titleUrl,
-    imageUrl,
-    descriptionUrl,
+    urlTitle,
+    urlImage,
+    urlDescription,
+    name,
+    creatorId,
+    pictureURL,
     likes,
     postId,
-    creatorId,
     setPosts,
     getPosts,
     getTrending,
@@ -315,15 +315,15 @@ export default function PostCard({
                             <S.PostLinkContent>
                                 <span>
                                     <S.PostLinkTitle>
-                                        {titleUrl}
+                                        {urlTitle}
                                     </S.PostLinkTitle>
                                     <S.PostLinkDescription>
-                                        {descriptionUrl}
+                                        { urlDescription}
                                     </S.PostLinkDescription>
                                 </span>
                                 <S.PostLinkUrl>{url}</S.PostLinkUrl>
                             </S.PostLinkContent>
-                            <S.PostLinkImage src={imageUrl} alt={titleUrl}/>
+                            <S.PostLinkImage src={urlImage} alt={urlTitle}/>
                 </S.PostLinkPreviewContainer>
 
                 </S.PostContentContainer>
