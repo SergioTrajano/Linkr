@@ -1,5 +1,3 @@
-
-import Header from "../Header/index.jsx";
 import * as S from "./style";
 import Trending from "../Timeline/Trending/index.jsx";
 import { useParams } from "react-router-dom";
@@ -8,12 +6,8 @@ import Post from "../Timeline/Post/index.jsx"
 import axios from "axios";
 
 
-
-
-
 export default function HashTag() {
     const {hashtag}=useParams()
-    console.log(hashtag)
 
     const [info , setInfo]=useState([])
    
@@ -22,17 +16,20 @@ export default function HashTag() {
             const result = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`);
           
             setInfo(result.data);
-            console.log(result.data)
            
         } catch (e) {
             console.log(e);
-          
-          
         }
     }  
-useEffect(()=>{
-    getPostsByHashtag()
-},[])
+    useEffect(()=>{
+        const result =  axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`);
+        result.then(response => {
+            setInfo(response.data);
+        })
+        result.catch(e => {
+            console.log(e);
+        });
+    }, [hashtag])
    
 function renderPosts() {
    
