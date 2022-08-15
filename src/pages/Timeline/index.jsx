@@ -10,7 +10,6 @@ import * as S from "./style";
 const Timeline = () => {
     const { token,setImage, setName } = useContext(UserContext);
     const [posts, setPosts] = useState("");
-    console.log(token)
   /*   const [trending, setTrending] = useState(""); */
 
 
@@ -27,8 +26,6 @@ const Timeline = () => {
             );
            
             setPosts(result.data);
-            setImage(result.data.pictureURL);
-            setName(result.data.username);
             console.log(result.data)
 
         } catch (e) {
@@ -60,7 +57,7 @@ const Timeline = () => {
         if (posts) {
             const timeline = posts.map(
                 ({
-                    id,
+                    postId,
                     url,
                     article,
                     urlTitle,
@@ -69,25 +66,23 @@ const Timeline = () => {
                     username,
                     userId,
                     pictureURL,
-                  
-                    like
+                    likes
                 }) => (
                     <Post
-                        key={id}
+                        key={postId}
                         url={url}
                         article={article}
                         urlTitle={urlTitle}
                         urlImage={urlImage}
                         urlDescription={urlDescription}
-                        name={username}
+                        username={username}
                         creatorId={userId}
                         pictureURL={pictureURL}
-                    /*     likes={like} */
-
-                        postId={id}
+                        likes={likes}
+                        postId={postId}
                       
-                        setPosts={setPosts}
-                        getPosts={getPosts} 
+                        // setPosts={setPosts}
+                        // getPosts={getPosts} 
                     /*     getTrending={getTrending} */
                     />
                 )
