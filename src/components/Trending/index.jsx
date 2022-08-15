@@ -22,7 +22,9 @@ export default function Trending( ){
     }  
    
         getTrending()
-   
+   async function getHashtagByName(){
+    
+   }
    
 
     return(<>
@@ -32,7 +34,9 @@ export default function Trending( ){
         
         </S.Title>
         <S.Hashtags>
-        {trending.map(item=>  <S.Hashtag>{item.name}</S.Hashtag>)}
+        {trending.map(item=>  <S.Hashtag
+        onClick={getHashtagByName}
+        >{item.name}</S.Hashtag>)}
            
             </S.Hashtags>
     </S.Container>
