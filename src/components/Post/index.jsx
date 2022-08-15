@@ -25,7 +25,6 @@ export default function PostCard({
     pictureURL,
     likes,
     postId,
-    setPosts,
     getPosts,
     getTrending,
 }) {
