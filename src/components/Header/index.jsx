@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import DefaultIcon from '../../assets/DefaultIcon.png'
-
+import { Link } from "react-router-dom";
 
 const Header = () => {
 const [logoutScreen,setLogoutScreen]=useState(false)
@@ -33,7 +33,9 @@ function logout(){
             if(logoutScreen)setLogoutScreen(false)
         }}>
             <S.Header>
+                 <Link to="/timeline">
                 <S.Logo >linkr</S.Logo>
+                </Link>
                 <SearchBar />
                 <S.UserContainer>
                     <S.UserOptionsContainer>

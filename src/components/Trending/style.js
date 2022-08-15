@@ -6,6 +6,7 @@ font-size: 19px;
 color: #ffffff;
 font-family: var(--secondary-font);
 margin-top: 10px;
+cursor: pointer;
 
 `
 export const Hashtags=styled.div`
