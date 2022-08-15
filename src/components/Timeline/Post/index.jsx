@@ -2,6 +2,7 @@ import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import Lottie from "react-lottie";
 /* import { toast } from "react-toastify"; */
+import ReactTooltip from 'react-tooltip';
 import styled from "styled-components";
 import * as S from "./styles";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +26,6 @@ export default function PostCard({
     pictureURL,
     likes,
     postId,
-    setPosts,
     getPosts,
 }) {
 
@@ -33,7 +33,7 @@ export default function PostCard({
     const [bodyValue, setBodyValue] = useState(article);
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
-    const [like, setLike] = useState(likes.length);
+    const [like, setLike] = useState(likes?.length);
     const [show, setShow] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState("");
     const [isDisabled, setIsDisabled] = useState("");
@@ -63,8 +63,8 @@ export default function PostCard({
     };
     const [animationLikeState, setAnimationLikeState] = useState({
         isStopped: false,
-        isPaused: false,
-        direction: likes.some(e=> e.username === name) ? 1 : -1,
+        isPaused: true,
+        direction: likes.some(e => e.username === name) ? 1 : -1,
     });
     const likeDefaultOptions = {
         loop: false,
@@ -87,6 +87,37 @@ export default function PostCard({
             },
         ],
     });
+
+    const filterLikes=likes.filter((e)=>e.username!==name)
+
+    function tooltipIfs() {
+        if(animationLikeState.direction===1) {
+            if(filterLikes.length>1){
+                return `Você, ${filterLikes[0]?.username}, ${filterLikes[1]?.username} e outras ${filterLikes.length-2} pessoas`
+            } 
+            if(filterLikes.length===1){
+                return `Você e ${filterLikes[0]?.username} curtiram`
+            }
+            if(filterLikes.length<1){
+                return `Você curtiu`
+            } 
+        } else{
+            if(filterLikes.length>2){
+                return `${filterLikes[0]?.username}, ${filterLikes[1]?.username}, ${filterLikes[2]?.username} e outras ${filterLikes.length-3} pessoas`
+            }
+            if(filterLikes.length===2){
+                return `${filterLikes[0]?.username} e ${filterLikes[1]?.username} curtiram`
+            }
+            if(filterLikes.length===1){
+                return `${filterLikes[0]?.username} curtiu`
+            }
+            if(filterLikes.length===0){
+                return `Nenhuma curtida ainda`
+            }
+        }
+    }
+   
+    const [tooltip,setTooltip]=useState(tooltipIfs)
 
     const deleteDefaultOptions = {
         loop: false,
@@ -139,6 +170,10 @@ export default function PostCard({
                 alert(e);
             });
     }
+
+    useEffect(() => {
+        setTooltip(tooltipIfs);
+    }, [animationLikeState, tooltipIfs])
 
     function addLike() {
         setAnimationLikeState({
@@ -228,7 +263,13 @@ export default function PostCard({
                         isStopped={animationLikeState.isStopped}
                     />
                 </div>
-                <h6>{like > 1 ? `${like} likes` : `${like} like`}</h6>
+                <span data-tip={tooltip}
+                    data-class='classTooltip'
+                    data-arrow-color='white'
+                >
+                    <h6>{like} likes</h6>
+                </span>
+                <ReactTooltip />
             </ProfilePhoto>
           
             <S.PostContentContainer>

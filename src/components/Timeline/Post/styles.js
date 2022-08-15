@@ -24,6 +24,18 @@ export const PostContainer = styled.div`
     align-items: center;
     background-color: var(--primary-color);
     padding: 10px 15px 15px;
+    .classTooltip {
+        color: #505050;
+        background-color: white;
+        font-size: 11px;
+        font-family: "Lato", sans-serif;
+        width: 200px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
     @media ${device.desktop} {
         max-width: 611px;
         height: 276px;

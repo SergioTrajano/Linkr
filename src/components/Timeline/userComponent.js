@@ -108,7 +108,7 @@ export default function User() {
             <S.Main>
                 <S.ContentContainer>
                     <S.PostsContainer>
-                        <S.UserData>{userData ? userData.username : ""}</S.UserData>
+                        <S.UserData>{userData ? userData.username + "'s posts" : ""}</S.UserData>
                         <S.UserPublishContainer>
                         
                         </S.UserPublishContainer>
