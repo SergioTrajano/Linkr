@@ -61,29 +61,31 @@ const Timeline = () => {
             const timeline = posts.map(
                 ({
                     id,
-                    username,
-                    pictureURL,
                     url,
                     article,
-                    titleUrl,
-                    imageUrl,
-                    descriptionUrl,
+                    urlTitle,
+                    urlImage,
+                    urlDescription,
+                    username,
                     userId,
+                    pictureURL,
+                  
                     like
                 }) => (
                     <Post
                         key={id}
-                        name={username}
-                        pictureURL={pictureURL}
                         url={url}
                         article={article}
-                        titleUrl={titleUrl}
-                        imageUrl={imageUrl}
-                        descriptionUrl={descriptionUrl}
+                        urlTitle={urlTitle}
+                        urlImage={urlImage}
+                        urlDescription={urlDescription}
+                        name={username}
+                        creatorId={userId}
+                        pictureURL={pictureURL}
                     /*     likes={like} */
 
                         postId={id}
-                        creatorId={userId}
+                      
                         setPosts={setPosts}
                         getPosts={getPosts} 
                     /*     getTrending={getTrending} */
