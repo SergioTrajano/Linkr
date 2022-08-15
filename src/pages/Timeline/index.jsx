@@ -2,15 +2,16 @@ import {  useEffect, useState, useContext} from "react";
 import Post from "../../components/Post";
 import axios from "axios";
 import UserContext from "../../contexts/UserContext";
+import SendPostCard from "../../components/UserPublish";
 import Header from "../../components/Header";
-import UserPublish from "../../components/UserPublish";
 import * as S from "./style";
 import Trending from "../../components/Trending/index.jsx";
 
 const Timeline = () => {
-    const { token, setImage, setName } = useContext(UserContext);
-    const [posts, setPosts] = useState([]);
-   
+    const { token,setImage, setName } = useContext(UserContext);
+    const [posts, setPosts] = useState("");
+    console.log(token)
+  /*   const [trending, setTrending] = useState(""); */
 
 
     async function getPosts() {
@@ -24,11 +25,12 @@ const Timeline = () => {
                 `https://back-projeto17-linkr.herokuapp.com/posts`,
                 config
             );
-         
+           
             setPosts(result.data);
             setImage(result.data.pictureURL);
             setName(result.data.username);
             console.log(result.data)
+
         } catch (e) {
             alert(
                 "An error occured while trying to fetch the posts, please refresh the page"
@@ -52,11 +54,11 @@ const Timeline = () => {
                     pictureURL,
                     url,
                     article,
-                    title,
-                    image,
-                    description,
+                    titleUrl,
+                    imageUrl,
+                    descriptionUrl,
                     userId,
-                  /*   like, */
+                    like
                 }) => (
                     <Post
                         key={id}
@@ -64,10 +66,11 @@ const Timeline = () => {
                         pictureURL={pictureURL}
                         url={url}
                         article={article}
-                        titleUrl={title}
-                        imageUrl={image}
-                        descriptionUrl={description}
+                        titleUrl={titleUrl}
+                        imageUrl={imageUrl}
+                        descriptionUrl={descriptionUrl}
                     /*     likes={like} */
+
                         postId={id}
                         creatorId={userId}
                         setPosts={setPosts}
@@ -81,7 +84,6 @@ const Timeline = () => {
         if (posts === []) return <span>There are no posts yet</span>;
         return <span>Loading...</span>;
     }
-    console.log(renderPosts())
     return (
         <>
             <Header />
@@ -91,12 +93,13 @@ const Timeline = () => {
                     <S.PostsContainer>
                         <S.UserData>timeline</S.UserData>
                         <S.UserPublishContainer>
-                        <UserPublish getPosts={getPosts}  />
+                        <SendPostCard getPosts={getPosts} />
                         </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
+                    <Trending /> 
                     <S.SidebarContainer>
-                <Trending /> 
+               
                     </S.SidebarContainer>
                 </S.ContentContainer>
               

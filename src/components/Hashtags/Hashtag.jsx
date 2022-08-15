@@ -13,10 +13,12 @@ import axios from "axios";
 
 export default function HashTag() {
     const {hashtag}=useParams
+    console.log(hashtag)
+    
     const [info , setInfo]=useState(null)
 
     useEffect(() => {
-        const URL = `https://back-projeto17-linkr.herokuapp.com/hashtags/${hashtag}`;
+        const URL = `https://back-projeto17-linkr.herokuapp.com/hashtag/${hashtag}`;
         const promise = axios.get(URL);
     
         promise.then(response => {

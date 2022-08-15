@@ -11,9 +11,9 @@ export default function Trending( ){
     async function getTrending() {
         try {
             const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/trending`);
-            console.log(result)
+          
             setTrending(result.data);
-            console.log(result.data)
+           
         } catch (e) {
             console.log(e);
           
@@ -36,7 +36,7 @@ export default function Trending( ){
         <S.Hashtags>
         {trending.map(item=>  <S.Hashtag
         onClick={getHashtagByName}
-        >{item.name}</S.Hashtag>)}
+        >#{item.name}</S.Hashtag>)}
            
             </S.Hashtags>
     </S.Container>

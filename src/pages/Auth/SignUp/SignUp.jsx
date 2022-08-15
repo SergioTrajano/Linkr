@@ -1,96 +1,96 @@
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-import { Container } from "./SignUp.js";
+import { Form, Rigth, Left, Container } from "../Login/Login";
 import { ThreeDots } from "react-loader-spinner";
-import Header from "../HeaderRegister/Header.js";
 
+export default function SignUp() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
+  function clearSignUpInputs() {
+    return {
+      email: "",
+      password: "",
+      username: "",
+      pictureURL: "",
+    };
+  }
 
-export default function Register() {
-    const [userName, setUserName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [picture, setPicture] = useState("");
-    const [load, setLoad] = useState(false);
+  const [postForm, setPostForm] = useState(clearSignUpInputs);
+  function handleForm(e) {
+    setPostForm({
+      ...postForm,
+      [e.target.name]: e.target.value,
+    });
+  }
 
-    const navigate = useNavigate();
+  function handleSignUpSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setPostForm(clearSignUpInputs);
 
-    function signUp(event) {
-        event.preventDefault();
-        setLoad(true);
-
-        const body = {
-            username: userName,
-            email,
-            password,
-            pictureURL: picture
-        };
-
-        const promise = axios.post(`https://back-projeto17-linkr.herokuapp.com/sign-up`, body);
-
-        promise.then(() => {
-            setLoad(false);
-            navigate("/");
-        });
-
-        promise.catch((Error) => {
-            setLoad(false);
-            if (Error.response.status === 422) {
-                alert("Fill in the forms correctly!");
-            }
-            if (Error.response.status === 409) {
-                alert("This email is already registered!");
-            }
-            if (Error.response.status === 500) {
-                alert("Server error!");
-            }
-        });
-    }
-
-    return (
-        <Container>
-        
-            <Header />
-            <div className="right">
-                <form onSubmit={signUp}>
-                    <input
-                        type="email"
-                        placeholder="e-mail"
-                        value={email}
-                        required
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="password"
-                        value={password}
-                        required
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="username"
-                        value={userName}
-                        required
-                        onChange={(e) => setUserName(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="picture"
-                        value={picture}
-                        required
-                        onChange={(e) => setPicture(e.target.value)}
-                    />
-                    <button type="submit" disabled={load}>
-                        {load ? <ThreeDots /> : <h3>Sign Up</h3>}
-                    </button>
-                </form>
-                <div className="back">
-                    <h1 onClick={() => navigate("/")}>Switch back to login</h1>
-                </div>
-            </div>
-        </Container>
+    const promise = axios.post(
+      "https://back-projeto17-linkr.herokuapp.com/sign-up",
+      postForm
     );
+    promise
+      .then(() => {
+        navigate("/");
+      })
+      .catch((erro) => {
+        console.log(erro);
+        alert(`${erro.response.data}`);
+        setLoading(false);
+      });
+  }
+
+  return (
+    <Container>
+      <Left>
+        <span>linkr</span>
+        <p>save, share and discover the best links on the web</p>
+      </Left>
+      <Rigth>
+        <Form $loading={loading} onSubmit={handleSignUpSubmit}>
+          <input
+            type="email"
+            placeholder="e-mail"
+            name="email"
+            value={postForm.email}
+            onChange={handleForm}
+            required
+          />
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            value={postForm.password}
+            onChange={handleForm}
+            required
+          />
+          <input
+            type="text"
+            placeholder="username"
+            name="username"
+            value={postForm.username}
+            onChange={handleForm}
+            required
+          />
+          <input
+            type="url"
+            placeholder="picture url"
+            name="pictureURL"
+            value={postForm.pictureURL}
+            onChange={handleForm}
+            required
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? <ThreeDots /> : <>Sign Up</>}
+          </button>
+          <Link to="/">Switch back to log in</Link>
+        </Form>
+      </Rigth>
+    </Container>
+  );
 }

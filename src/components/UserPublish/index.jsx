@@ -3,13 +3,17 @@ import axios from "axios";
 import * as S from "./styles";
 import UserContext from "../../contexts/UserContext";
 
-export default function SendPostCard({ getPosts,getTrending }) {
-    const {image, token } = useContext(UserContext);
-    const [url, setLink] = useState("");
-    const [article, setBody] = useState("");
-    const [loading, setLoading] = useState(false);
 
-    console.log(token)
+import styled from "styled-components";
+
+
+export default function SendPostCard({ getPosts }) {
+    const { image, token } = useContext(UserContext);
+    const [url, setUrl] = useState("");
+    const [article, setArticle] = useState("");
+    const [loading, setLoading] = useState(false);
+   
+
     function findHashtags(searchText) {
         var regexp = /(\s|^)\#\w\w+\b/gm;
         let result = searchText.match(regexp);
@@ -42,8 +46,9 @@ export default function SendPostCard({ getPosts,getTrending }) {
             const post = {
                 url,
                 article,
-                hashtags: hashtags
+                hashtags,
             };
+            console.log(post)
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -54,12 +59,11 @@ export default function SendPostCard({ getPosts,getTrending }) {
                 post,
                 config
             );
-          //  await getPosts();
-           // await getTrending();
+            await getPosts();
+            /* await getTrending(); */
             setLoading(false);
-            setLink("");
-            setBody("");
-            console.log("deu")
+            setUrl("");
+            setArticle("");
         } catch (e) {
             alert("Houve um erro ao publicar seu link");
             console.log(e);
@@ -74,31 +78,30 @@ export default function SendPostCard({ getPosts,getTrending }) {
         return "Publish";
     }
     return (
+     
         <S.BoxPublish>
         <S.Container>
             <S.Data>
                 <S.ImageUser>
                 <img src={image} alt="img" />
                 </S.ImageUser>
-                <S.Form onSubmit={publish}className="Desk">
+                <S.Form onSubmit={publish} className="Desk">
                     <p>What are you going to share today?</p>
                     <S.Inputs>
                         <input
                             type="url"
+                            className="inputUrl"
                             placeholder="  http://..."
                             required
-                            onChange={(e) => setLink(e.target.value)}
+                            onChange={(e) => setUrl(e.target.value)}
                             value={url}
                             disabled={loading}
                         ></input>                      
                         <input
-                             name="text"
-                             rows="14"
-                             cols="10"
-                             wrap="soft"
+                            type="text"
                              placeholder="Awesome article about #javascript"
-                             required
-                             onChange={(e) => setBody(e.target.value)}
+                             className="inputArticle"
+                             onChange={(e) => setArticle(e.target.value)}
                              value={article}
                              disabled={loading}
                         ></input>
@@ -116,5 +119,8 @@ export default function SendPostCard({ getPosts,getTrending }) {
             </S.Data>
         </S.Container>
     </S.BoxPublish>
+ 
     );
 }
+
+
