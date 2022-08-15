@@ -8,7 +8,7 @@ export function Login() {
   const navigate = useNavigate();
   const { setToken, setImage, setName } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
-
+  
   function clearLoginInputs() {
     return {
       email: "",

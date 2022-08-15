@@ -32,7 +32,7 @@ const { token, userId, setUserId, setImage, setName } = useContext(UserContext);
 const [bodyValue, setBodyValue] = useState();
 const [originalBody, setOriginalBody] = useState(article);
 const [textEdit, setTextEdit] = useState(false);
-const [like, setLike] = useState(likes);
+const [like, setLike] = useState(likes.length);
 const [show, setShow] = useState(false);
 const [isInputDisabled, setIsInputDisabled] = useState("");
 const [isDisabled, setIsDisabled] = useState("");
@@ -250,6 +250,7 @@ function removePost() {
                         <S.PostUserImage
                            src={pictureURL} alt={legendAlt}
                         />
+                        <p>{like} likes</p>
                     </S.PostSideContainer>
 
                     <S.PostContentContainer>
