@@ -37,21 +37,10 @@ const Timeline = () => {
     }
   
     useEffect(()=>{
-        getPosts()
+        getPosts() 
         
     },[]);
-   
-   /*  async function getTrending() {
-        try {
-            const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/trending`);
-            setTrending(result.data);
-        } catch (e) {
-            alert(
-                "An error occured while trying to fetch the trending hashtags, please refresh the page"
-            );
-            console.log(e);
-        }
-    }  */
+ 
 
     function renderPosts() {
         if (posts) {
@@ -107,7 +96,7 @@ const Timeline = () => {
                     </S.PostsContainer>
                     <Trending />
                     <S.SidebarContainer>
-                {/*      <Trending getTrending={getTrending}/>  */}
+               
                     </S.SidebarContainer>
                 </S.ContentContainer>
               

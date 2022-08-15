@@ -8,6 +8,7 @@ import GlobalStyles from "../GlobalStyles";
 import UserContext from "../contexts/UserContext.js";
 import PrivateRoute from "../components/Routes/PrivateRoute";
 import PublicRoute from "../components/Routes/PublicRoute";
+import HashTag from "./Hashtags/Hashtag.jsx";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -38,6 +39,7 @@ export default function App() {
           </Route>
           <Route element={<PrivateRoute auth={isAuthenticated} />}>
             <Route path="/timeline" element={<Timeline />} />
+            <Route path="/hashtag/:hashtag" element={<HashTag />} />
             <Route path="/timeline/user/:id" element={<UserPage />} />
           </Route>
         </Routes>
