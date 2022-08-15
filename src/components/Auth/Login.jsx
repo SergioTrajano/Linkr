@@ -6,7 +6,7 @@ import UserContext from "../../context/userContext.js";
 
 export function Login() {
   const navigate = useNavigate();
-  const { setToken, setImage, setName } = useContext(UserContext);
+  const { setToken, setImage, setName, setShowHeader } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   function clearLoginInputs() {
@@ -44,6 +44,7 @@ export function Login() {
         setImage(res.data.pictureURL);
         setName(res.data.username);
         setToken(res.data.token);
+        setShowHeader(true);
         navigate("/timeline");
       })
       .catch((error) => {

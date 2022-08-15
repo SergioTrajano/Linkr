@@ -16,7 +16,7 @@ export default function App() {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
-  const isAuthenticated = localStorage.getItem("isLogged");
+  const [showHeader, setShowHeader] = useState(false);
 
   const userContext = {
     token,
@@ -27,19 +27,20 @@ export default function App() {
     setName,
     userId,
     setUserId,
+    setShowHeader,
   };
 
   return (
     <BrowserRouter>
       <GlobalStyles />
       <UserContext.Provider value={userContext}>
-        {isAuthenticated ? <Header /> : <></>}
+        {showHeader ? <Header /> : <></>}
         <Routes>
-          <Route element={<PublicRoute auth={isAuthenticated} />}>
+          <Route element={<PublicRoute auth={localStorage.getItem("isLogged")}/>}>
             <Route path="/" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
           </Route>
-          <Route element={<PrivateRoute auth={isAuthenticated} />}>
+          <Route element={<PrivateRoute auth={localStorage.getItem("isLogged")}/>}>
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/user/:id" element={<UserPage />} />
           </Route>

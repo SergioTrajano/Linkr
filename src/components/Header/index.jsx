@@ -7,45 +7,40 @@ import * as S from "./styles";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/userContext.js";
-import DefaultIcon from '../../assets/DefaultIcon.png'
-
-
 
 const Header = () => {
-const [logoutScreen,setLogoutScreen]=useState(false)
-const {user,setUser}=useContext(UserContext)
-const navigate=useNavigate()
+    const [ logoutScreen, setLogoutScreen] = useState(false);
+    const { image, setShowHeader } = useContext(UserContext);
+    const navigate = useNavigate();
 
-function showScreen(){
-    setLogoutScreen(!logoutScreen)
-}
+    function showScreen() {
+        setLogoutScreen(!logoutScreen);
+    }
 
-function logout(){
-    localStorage.removeItem("logged_in")
-    navigate('/')
-    setUser()
-}
+    function logout() {
+        localStorage.removeItem("isLogged");
+        setShowHeader(false);
+        navigate('/');
+    }
 
     return (
         <S.HeaderContainer 
         onClick={()=>{
-            if(logoutScreen)setLogoutScreen(false)
+            if (logoutScreen) setLogoutScreen(false)
         }}>
             <S.Header>
                 <S.Logo >linkr</S.Logo>
                 <SearchBar />
                 <S.UserContainer>
                     <S.UserOptionsContainer>
-                    {(logoutScreen 
+                    {logoutScreen 
                     ?
                     <UserOptionsUpButton onClick={showScreen}/>
                     :
-                    <UserOptionsButton onClick={showScreen}/>)}  
+                    <UserOptionsButton onClick={showScreen}/>}  
 
                     {(<S.UserIcon src= 
-                    {user 
-                    ? user.pictureURL 
-                    : DefaultIcon} 
+                    {image}
                     onClick={showScreen} />)}
                     </S.UserOptionsContainer>
 
