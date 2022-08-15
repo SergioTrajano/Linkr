@@ -76,8 +76,7 @@ export default function PostCard({
         isPaused: true,
         direction: (likes.some(e=>e.username===name)? 1 : -1),
     });
-    
-    const [controller,setController]=useState(likeDefaultOptions.autoplay)
+
     const [animationDeleteState, setAnimationDeleteState] = useState({
         isStopped: false,
         isPaused: false,
@@ -175,7 +174,7 @@ export default function PostCard({
     }
 
     function postLike() {
-        if (animationLikeState.direction === 1||controller) {
+        if (animationLikeState.direction === 1) {
             const promisse = axios
                 .delete(
                     `https://back-projeto17-linkr.herokuapp.com/like/${postId}`,
