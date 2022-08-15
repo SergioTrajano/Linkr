@@ -49,6 +49,7 @@ export default function PostCard({
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
+
         },
     };
     
@@ -277,6 +278,7 @@ export default function PostCard({
 
     return (
         <S.Wrapper >
+
         <S.PostContainer key={key}>
         
             <ProfilePhoto>
@@ -297,6 +299,7 @@ export default function PostCard({
             <S.PostUserName>
              <h3>{name}</h3> 
              <S.IconsContainer  >
+
                                 <TiPencil
                                     
                                     className="icon-post"

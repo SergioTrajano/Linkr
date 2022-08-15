@@ -10,10 +10,9 @@ import UserContext from "../../contexts/UserContext";
 import DefaultIcon from '../../assets/DefaultIcon.png'
 
 
-
 const Header = () => {
 const [logoutScreen,setLogoutScreen]=useState(false)
-const {user,setUser}=useContext(UserContext)
+const { setToken, image,setImage, setName } = useContext(UserContext);
 const navigate=useNavigate()
 
 function showScreen(){
@@ -21,9 +20,11 @@ function showScreen(){
 }
 
 function logout(){
-    localStorage.removeItem("logged_in")
+    localStorage.removeItem("isLogged")
     navigate('/')
-    setUser()
+    setToken()
+    setImage()
+    setName()
 }
 
     return (
@@ -43,8 +44,8 @@ function logout(){
                     <UserOptionsButton onClick={showScreen}/>)}  
 
                     {(<S.UserIcon src= 
-                    {user 
-                    ? user.pictureURL 
+                    {image 
+                    ? image
                     : DefaultIcon} 
                     onClick={showScreen} />)}
                     </S.UserOptionsContainer>
