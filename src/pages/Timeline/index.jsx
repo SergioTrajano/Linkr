@@ -2,15 +2,15 @@ import {  useEffect, useState, useContext} from "react";
 import Post from "../../components/Post";
 import axios from "axios";
 import UserContext from "../../contexts/UserContext";
+import SendPostCard from "../../components/UserPublish";
 import Header from "../../components/Header";
-import UserPublish from "../../components/UserPublish";
 import * as S from "./style";
 /* import Trending from "../../components/Trending/index.jsx";
  */
 const Timeline = () => {
-    const { token } = useContext(UserContext);
+    const { token,setImage, setName } = useContext(UserContext);
+    const [posts, setPosts] = useState("");
     console.log(token)
-    const [posts, setPosts] = useState([]);
   /*   const [trending, setTrending] = useState(""); */
 
 
@@ -27,6 +27,10 @@ const Timeline = () => {
             );
            
             setPosts(result.data);
+            setImage(result.data.pictureURL);
+            setName(result.data.username);
+            console.log(result.data)
+
         } catch (e) {
             alert(
                 "An error occured while trying to fetch the posts, please refresh the page"
@@ -61,9 +65,9 @@ const Timeline = () => {
                     pictureURL,
                     url,
                     article,
-                    title,
-                    image,
-                    description,
+                    titleUrl,
+                    imageUrl,
+                    descriptionUrl,
                     userId,
                     like
                 }) => (
@@ -73,10 +77,11 @@ const Timeline = () => {
                         pictureURL={pictureURL}
                         url={url}
                         article={article}
-                        titleUrl={title}
-                        imageUrl={image}
-                        descriptionUrl={description}
-                        likes={like}
+                        titleUrl={titleUrl}
+                        imageUrl={imageUrl}
+                        descriptionUrl={descriptionUrl}
+                    /*     likes={like} */
+
                         postId={id}
                         creatorId={userId}
                         setPosts={setPosts}
@@ -99,7 +104,7 @@ const Timeline = () => {
                     <S.PostsContainer>
                         <S.UserData>timeline</S.UserData>
                         <S.UserPublishContainer>
-                        <UserPublish getPosts={getPosts}  />
+                        <SendPostCard getPosts={getPosts} />
                         </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
