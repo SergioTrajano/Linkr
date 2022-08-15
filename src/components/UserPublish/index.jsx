@@ -32,15 +32,17 @@ export default function SendPostCard({ getPosts,getTrending }) {
     }
 
     async function publish(e) {
-        e.preventDefault();
+        console.log("to aqui")
+     
         setLoading(true);
         try {
             const hashtags = removeDuplicates(findHashtags(article));
+            console.log(hashtags)
 
             const post = {
                 url,
                 article,
-                hashtags: hashtags,
+                hashtags: hashtags
             };
             const config = {
                 headers: {
@@ -52,8 +54,8 @@ export default function SendPostCard({ getPosts,getTrending }) {
                 post,
                 config
             );
-            await getPosts();
-            await getTrending();
+          //  await getPosts();
+           // await getTrending();
             setLoading(false);
             setLink("");
             setBody("");
@@ -71,7 +73,6 @@ export default function SendPostCard({ getPosts,getTrending }) {
         }
         return "Publish";
     }
-
     return (
         <S.BoxPublish>
         <S.Container>
@@ -79,7 +80,7 @@ export default function SendPostCard({ getPosts,getTrending }) {
                 <S.ImageUser>
                 <img src={image} alt="img" />
                 </S.ImageUser>
-                <S.Form oonSubmit={publish}className="Desk">
+                <S.Form onSubmit={publish}className="Desk">
                     <p>What are you going to share today?</p>
                     <S.Inputs>
                         <input
@@ -89,8 +90,7 @@ export default function SendPostCard({ getPosts,getTrending }) {
                             onChange={(e) => setLink(e.target.value)}
                             value={url}
                             disabled={loading}
-                        ></input>
-                        
+                        ></input>                      
                         <input
                              name="text"
                              rows="14"

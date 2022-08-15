@@ -25,7 +25,7 @@ export default function Register() {
             username: userName,
             email,
             password,
-            picture,
+            pictureURL: picture
         };
 
         const promise = axios.post(`https://back-projeto17-linkr.herokuapp.com/sign-up`, body);

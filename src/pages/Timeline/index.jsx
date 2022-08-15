@@ -10,7 +10,7 @@ import Trending from "../../components/Trending/index.jsx";
 const Timeline = () => {
     const { token, setImage, setName } = useContext(UserContext);
     const [posts, setPosts] = useState([]);
-    const [trending, setTrending] = useState()
+   
 
 
     async function getPosts() {
@@ -39,6 +39,7 @@ const Timeline = () => {
   
     useEffect(()=>{
         getPosts() 
+        
     },[]);
  
 
@@ -95,7 +96,7 @@ const Timeline = () => {
                         {renderPosts()}
                     </S.PostsContainer>
                     <S.SidebarContainer>
-                <Trending  setTrending={setTrending} trending={trending} /> 
+                <Trending /> 
                     </S.SidebarContainer>
                 </S.ContentContainer>
               
