@@ -1,12 +1,13 @@
 import * as S from "./style";
 import { useState , useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 
 export default function Trending( ){
     const [trending, setTrending] = useState([])
-
+const navigate=useNavigate()
     
     async function getTrending() {
         try {
@@ -24,11 +25,7 @@ export default function Trending( ){
         getTrending()
     },[])
    
-      
-   async function getHashtagByName(){
     
-   }
-   
 
     return(<>
     <S.Container>
@@ -37,9 +34,7 @@ export default function Trending( ){
         
         </S.Title>
         <S.Hashtags>
-        {trending.map(item=>  <S.Hashtag
-        onClick={getHashtagByName}
-        >#{item.name}</S.Hashtag>)}
+        {trending.map(item=>  <S.Hashtag onClick={()=>{ navigate(`/hashtag/${item.name}`)}}>#{item.name}</S.Hashtag>)}
            
             </S.Hashtags>
     </S.Container>

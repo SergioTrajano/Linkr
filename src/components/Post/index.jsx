@@ -11,6 +11,7 @@ import { TiPencil } from "react-icons/ti";
 import UserContext from "../../contexts/UserContext";
 import animationDataLike from "../assets/like-icon.json";
 import animationDataDelete from "../assets/delete-icon.json";
+import { getDefaultOptions } from "date-fns";
 
 import { ReactTagify } from "react-tagify"; 
 
@@ -21,8 +22,7 @@ export default function PostCard({
     urlTitle,
     urlImage,
     urlDescription,
-    name,
-    creatorId,
+    username,
     pictureURL,
     likes,
     postId,
@@ -31,11 +31,11 @@ export default function PostCard({
     getTrending,
 }) {
 
-    const { token, userId, setUserId,setLoad } = useContext(UserContext);
+    const { token, name } = useContext(UserContext);
     const [bodyValue, setBodyValue] = useState(article);
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
-    const [like, setLike] = useState(likes);
+    const [like, setLike] = useState(likes.length)
     const [show, setShow] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState("");
     const [isDisabled, setIsDisabled] = useState("");
@@ -51,7 +51,7 @@ export default function PostCard({
         headers: {
             Authorization: `Bearer ${token}`,
 
-        },
+        }
     };
     
 
@@ -64,19 +64,19 @@ export default function PostCard({
         textAlign: "left",
         color: "#FAFAFA",
     };
-    const [animationLikeState, setAnimationLikeState] = useState({
-        isStopped: false,
-        isPaused: false,
-        direction: -1,
-    });
     const likeDefaultOptions = {
         loop: false,
-        autoplay: false,
+        autoplay:likes.some(e=>e.username===name),
         animationData: animationDataLike,
         rendererSettings: {
             preserveAspectRatio: "xMidYMid slice",
         },
     };
+    const [animationLikeState, setAnimationLikeState] = useState({
+        isStopped: false,
+        isPaused: true,
+        direction: (likes.some(e=>e.username===name)? 1 : -1),
+    });
 
     const [animationDeleteState, setAnimationDeleteState] = useState({
         isStopped: false,
@@ -91,61 +91,12 @@ export default function PostCard({
         ],
     });
 
-    const deleteDefaultOptions = {
-        loop: false,
-        autoplay: false,
-        animationData: animationDataDelete,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice",
-        },
-        eventListeners: [
-            {
-                eventName: "complete",
-                callback: () => console.log("the animation completed:"),
-            },
-        ],
-    };
 
     const normalAnimation = 1;
     const reverseAnimation = -1;
-    const legendAlt = `${name} profile pic`;
+    const legendAlt = `${username} profile pic`;
 
-   /*  useEffect(() => {
-        if (textEdit === true) {
-            inputRef.current.focus();
-        }
 
-        getLikes();
-    }, [textEdit]);  */
-
-   /*  async function getLikes() {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        try {
-            const { data: result } = await axios.get(
-                `${process.env.REACT_APP_BASE_URL}/like/${postId}`,
-                config
-            );
-            setUserId(result?.userId);
-            if (result.isLiked === true) {
-                setAnimationLikeState({ ...animationLikeState, direction: 1 });
-            }
-        } catch (e) {
-            alert(
-                "An error occured while trying to fetch the posts, please refresh the page"
-            );
-
-            setTimeout(() => {
-                navigate("/");
-              }, 1000);
-
-            console.log(e);
-        }
-    }
-  */
     function handleKeyPress(event) {
         if (event.key === "Escape") {
             setTextEdit(!textEdit);
@@ -227,23 +178,23 @@ export default function PostCard({
         if (animationLikeState.direction === 1) {
             const promisse = axios
                 .delete(
-                    `https://back-projeto17-linkr.herokuapp.com/`,
+                    `https://back-projeto17-linkr.herokuapp.com/like/${postId}`,
                     config
                 )
 
-                .then(() => removeLike())
-
+                .then(() => {
+                    removeLike();
+                })
                 .catch((e) => alert(e));
         } else {
             const promisse = axios
                 .post(
-                    `https://back-projeto17-linkr.herokuapp.com/`,
+                    `https://back-projeto17-linkr.herokuapp.com/like/${postId}`,
                     {},
                     config
                 )
 
                 .then(() => addLike())
-
                 .catch((e) => console.log(e));
         }
     }
@@ -299,7 +250,7 @@ export default function PostCard({
             <S.PostContentContainer>
 
             <S.PostUserName>
-             <h3>{name}</h3> 
+             <h3>{username}</h3> 
              
                      <S.IconsContainer  >
 

@@ -4,7 +4,7 @@ import * as S from "./style";
 import Trending from "../Trending/index.jsx";
 import { useParams } from "react-router-dom";
 import { useState  , useEffect} from "react";
-import Post from "../Post/index.jsx"
+import Post from "../../components/Post"
 import axios from "axios";
 
 
@@ -16,7 +16,7 @@ export default function HashTag() {
     console.log(hashtag)
 
     const [info , setInfo]=useState([])
-
+   
     async function getPostsByHashtag() {
         try {
             const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/hashtag/${hashtag}`);
@@ -34,6 +34,41 @@ useEffect(()=>{
     getPostsByHashtag()
 },[])
    
+function renderPosts() {
+   
+        const timeline = info.map(
+            ({
+                postId,
+                url,
+                article,
+                urlTitle,
+                urlImage,
+                urlDescription,
+                username,
+                pictureURL,
+                likes
+            }) => (
+                <Post
+                    key={postId}
+                    url={url}
+                    article={article}
+                    urlTitle={urlTitle}
+                    urlImage={urlImage}
+                    urlDescription={urlDescription}
+                    username={username}
+                    pictureURL={pictureURL}
+                    likes={likes}
+                    postId={postId}
+                  
+                    // setPosts={setPosts}
+                    // getPosts={getPosts} 
+                /*     getTrending={getTrending} */
+                />
+            )
+        );
+        return timeline;
+ 
+}
 
 
     return (<>
@@ -51,7 +86,7 @@ useEffect(()=>{
                     </S.UserData>
                     <S.UserPublishContainer>
                  
-              
+                {renderPosts()}
 
 
                     </S.UserPublishContainer>
