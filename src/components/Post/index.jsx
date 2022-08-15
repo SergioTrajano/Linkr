@@ -15,7 +15,6 @@ import { getDefaultOptions } from "date-fns";
 import { ReactTagify } from "react-tagify"; 
 
 export default function PostCard({
-    key,
     url,
     article,
     urlTitle,
@@ -62,6 +61,7 @@ export default function PostCard({
         textAlign: "left",
         color: "#FAFAFA",
     };
+
     const likeDefaultOptions = {
         loop: false,
         autoplay:likes.some(e=>e.username===name),
@@ -70,6 +70,7 @@ export default function PostCard({
             preserveAspectRatio: "xMidYMid slice",
         },
     };
+
     const [animationLikeState, setAnimationLikeState] = useState({
         isStopped: false,
         isPaused: true,
@@ -229,7 +230,7 @@ export default function PostCard({
     return (
         <S.Wrapper >
 
-        <S.PostContainer key={key}>
+        <S.PostContainer>
         
             <ProfilePhoto>
                 <img src={pictureURL} alt={legendAlt} />

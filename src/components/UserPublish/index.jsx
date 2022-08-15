@@ -36,10 +36,12 @@ export default function SendPostCard({ getPosts }) {
     }
 
     async function publish(e) {
-        e.preventDefault();
+        console.log("to aqui")
+     
         setLoading(true);
         try {
             const hashtags = removeDuplicates(findHashtags(article));
+            console.log(hashtags)
 
             const post = {
                 url,
@@ -75,7 +77,6 @@ export default function SendPostCard({ getPosts }) {
         }
         return "Publish";
     }
-
     return (
      
         <S.BoxPublish>
@@ -95,8 +96,7 @@ export default function SendPostCard({ getPosts }) {
                             onChange={(e) => setUrl(e.target.value)}
                             value={url}
                             disabled={loading}
-                        ></input>
-                        
+                        ></input>                      
                         <input
                             type="text"
                              placeholder="Awesome article about #javascript"

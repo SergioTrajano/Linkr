@@ -5,6 +5,7 @@ import UserContext from "../../contexts/UserContext.js";
 export default function PrivateRoute({ auth }) {
   const { token, setToken, setImage, setName } = useContext(UserContext);
   const parseAuth = JSON.parse(auth);
+  console.log(auth);
   if (auth && !token) {
     setName(parseAuth.name);
     setToken(parseAuth.token);

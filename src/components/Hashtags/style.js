@@ -111,3 +111,78 @@ margin-bottom: 16px;
   }
 
 `
+export const PostLinkPreviewContainer = styled.a`
+    width: 100%;
+    height: 115px;
+    display: flex;
+    border: 1px solid #4d4d4d;
+    border-radius: 11px;
+    cursor: pointer;
+    @media ${device.desktop} {
+        width: 503px;
+        height: 155px;
+    }
+`;
+
+export const PostLinkContent = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 7px 11px;
+    font-weight: 400;
+    @media ${device.desktop} {
+        padding: 24px 20px;
+    }
+`;
+
+export const PostLinkTitle = styled.h1`
+    width: 100%;
+    font-family: var(--primary-font);
+    font-size: 11px;
+    line-height: 13px;
+    color: #cecece;
+    margin-bottom: 5px;
+    @media ${device.desktop} {
+        font-size: 16px;
+        line-height: 19px;
+    }
+`;
+
+export const PostLinkDescription = styled.p`
+    font-family: var(--primary-font);
+    font-size: 9px;
+    line-height: 11px;
+    color: #9b9595;
+    margin-bottom: 5px;
+    @media ${device.desktop} {
+        font-size: 11px;
+        line-height: 13px;
+    }
+`;
+
+export const PostLinkUrl = styled.p`
+    font-family: var(--primary-font);
+    font-size: 9px;
+    line-height: 11px;
+    color: #cecece;
+    :hover {
+        text-decoration: underline;
+    }
+    @media ${device.desktop} {
+        font-size: 11px;
+        line-height: 13px;
+    }
+`;
+
+export const PostLinkImage = styled.img`
+    width: 95px;
+    height: 115px;
+    border-radius: 0px 12px 13px 0px;
+    object-fit: cover;
+    @media ${device.desktop} {
+        width: 155px;
+        height: 155px;
+    }
+`;
