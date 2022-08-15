@@ -311,7 +311,6 @@ export default function PostCard({
                                 />
              </S.IconsContainer>  
             </S.PostUserName>
-         
                 <S.PostLinkPreviewContainer href={url} target="_blank">
                             <S.PostLinkContent>
                                 <span>
