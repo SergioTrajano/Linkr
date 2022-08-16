@@ -17,7 +17,7 @@ const SearchBar = () => {
         <S.SearchBarContainer>
             <S.SearchBarContainerInput>
                 <DebounceInput
-                    minLength={3}
+                    minLength={0}
                     debounceTimeout={300}
                     onChange={event => {
                         const config = {
@@ -25,7 +25,10 @@ const SearchBar = () => {
                                 Authorization: `Bearer ${token}`
                             }
                         };
-                        console.log(event.target.value)
+                        if (event.target.value.trimStart().length < 3) {
+                            setSearchResult([]);
+                            return;
+                        }
                         const promise = axios.get(`http://localhost:4000/users?name=${event.target.value}`, config);
                         promise.then(response => {
                             setSearchResult(response.data);
