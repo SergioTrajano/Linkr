@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import device from "../../utils/devicesSizes";
+import device from "../../../utils/devicesSizes.js";
 
 const SearchBarContainer = styled.div`
     justify-content: center;
@@ -11,7 +11,7 @@ const SearchBarContainer = styled.div`
     width: 93%;
     margin-top: calc(45px + 72px + 10px);
 
-    @media ${device.desktop} {
+    @media ${device.desktop} { 
         width: 563px;
         position: relative;
         margin-top: 0;

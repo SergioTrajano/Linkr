@@ -1,17 +1,14 @@
 import {  useEffect, useState, useContext} from "react";
-import Post from "../../components/Post";
+import Post from "./Post/index.jsx";
 import axios from "axios";
-import UserContext from "../../contexts/UserContext";
-import SendPostCard from "../../components/UserPublish";
-import Header from "../../components/Header";
+import UserContext from "../../context/userContext.js";
+import SendPostCard from "./UserPublish/index.jsx";
 import * as S from "./style";
-import Trending from "../../components/Trending/index.jsx";
- 
-const Timeline = () => {
-    const { token,setImage, setName } = useContext(UserContext);
-    const [posts, setPosts] = useState("");
-  /*   const [trending, setTrending] = useState(""); */
+import Trending from "./Trending/index.jsx";
 
+const Timeline = () => {
+    const { token } = useContext(UserContext);
+    const [posts, setPosts] = useState("");
 
     async function getPosts() {
         const config = {
@@ -21,12 +18,11 @@ const Timeline = () => {
         };
         try {
             const result = await axios.get(
-                `https://back-projeto17-linkr.herokuapp.com/posts`,
+                `${process.env.REACT_APP_API_BASE_URL}/posts`,
                 config
             );
            
             setPosts(result.data);
-            console.log(result.data)
 
         } catch (e) {
             alert(
@@ -35,15 +31,30 @@ const Timeline = () => {
             console.log(e);
         }
     }
-  
-    useEffect(()=>{
-        getPosts() 
-        
-    },[]);
- 
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+            const result = axios.get(
+                `${process.env.REACT_APP_API_BASE_URL}/posts`,
+                config
+            );
+           result.then((res) => {
+            setPosts(res.data);
+           });
+        result.catch((e) => {
+            alert(
+                "An error occured while trying to fetch the posts, please refresh the page"
+            );
+            console.log(e);
+        });
+    }, [token]);
 
     function renderPosts() {
-        if (posts) {
+        if (posts.length) {
             const timeline = posts.map(
                 ({
                     postId,
@@ -53,8 +64,9 @@ const Timeline = () => {
                     urlImage,
                     urlDescription,
                     username,
+                    userId,
                     pictureURL,
-                    likes
+                    likes,
                 }) => (
                     <Post
                         key={postId}
@@ -64,13 +76,12 @@ const Timeline = () => {
                         urlImage={urlImage}
                         urlDescription={urlDescription}
                         username={username}
+                        creatorId={userId}
                         pictureURL={pictureURL}
-                        likes={likes}
                         postId={postId}
-                      
-                        // setPosts={setPosts}
-                        // getPosts={getPosts} 
-                    /*     getTrending={getTrending} */
+                        setPosts={setPosts}
+                        getPosts={getPosts} 
+                        likes={likes}
                     />
                 )
             );
@@ -80,10 +91,7 @@ const Timeline = () => {
         return <span>Loading...</span>;
     }
     return (
-        <>
-            <Header />
             <S.Main>
-                <S.TimelineContainer>{"timeline"}</S.TimelineContainer>
                 <S.ContentContainer>
                     <S.PostsContainer>
                         <S.UserData>timeline</S.UserData>
@@ -94,13 +102,9 @@ const Timeline = () => {
                     </S.PostsContainer>
                     <Trending />
                     <S.SidebarContainer>
-               
                     </S.SidebarContainer>
                 </S.ContentContainer>
-              
             </S.Main>
-          
-        </>
     );
 };
 export default Timeline;

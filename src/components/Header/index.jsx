@@ -1,54 +1,48 @@
 import { IoChevronDownOutline as UserOptionsButton } from "react-icons/io5";
 import { IoChevronUpOutline as UserOptionsUpButton } from "react-icons/io5";
 
-import SearchBar from "../SearchBar";
+import SearchBar from "./SearchBar/index.jsx";
 import { useState } from "react";
 import * as S from "./styles";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
-import DefaultIcon from '../../assets/DefaultIcon.png'
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import UserContext from "../../context/userContext.js";
 
 const Header = () => {
-const [logoutScreen,setLogoutScreen]=useState(false)
-const { setToken, image,setImage, setName } = useContext(UserContext);
-const navigate=useNavigate()
+    const [ logoutScreen, setLogoutScreen] = useState(false);
+    const { image, setShowHeader } = useContext(UserContext);
+    const navigate = useNavigate();
 
-function showScreen(){
-    setLogoutScreen(!logoutScreen)
-}
+    function showScreen() {
+        setLogoutScreen(!logoutScreen);
+    }
 
-function logout(){
-    localStorage.removeItem("isLogged")
-    navigate('/')
-    setToken()
-    setImage()
-    setName()
-}
+    function logout() {
+        localStorage.removeItem("isLogged");
+        setShowHeader(false);
+        navigate('/');
+    }
 
     return (
         <S.HeaderContainer 
         onClick={()=>{
-            if(logoutScreen)setLogoutScreen(false)
+            if (logoutScreen) setLogoutScreen(false)
         }}>
             <S.Header>
-                 <Link to="/timeline">
-                <S.Logo >linkr</S.Logo>
+                <Link to="/timeline">
+                    <S.Logo >linkr</S.Logo>
                 </Link>
                 <SearchBar />
                 <S.UserContainer>
                     <S.UserOptionsContainer>
-                    {(logoutScreen 
+                    {logoutScreen 
                     ?
                     <UserOptionsUpButton onClick={showScreen}/>
                     :
-                    <UserOptionsButton onClick={showScreen}/>)}  
+                    <UserOptionsButton onClick={showScreen}/>}  
 
                     {(<S.UserIcon src= 
-                    {image 
-                    ? image
-                    : DefaultIcon} 
+                    {image}
                     onClick={showScreen} />)}
                     </S.UserOptionsContainer>
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import device from "../../utils/devicesSizes";
+import device from "../../utils/devicesSizes.js";
 
 export const Header = styled.header`
   width: 100%;
@@ -15,10 +15,10 @@ export const Header = styled.header`
 `;
 
 export const Logo = styled.h1`
-  font-family: "Passion One";
+  font-family: var(--thirdy-font);
   font-weight: 700;
-  font-size: 45px;
-  line-height: 50px;
+  font-size: 49px;
+  line-height: 54px;
   letter-spacing: 0.05em;
   color: var(--secondary-color);
   word-break: keep-all;

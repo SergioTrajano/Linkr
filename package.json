@@ -1,23 +1,23 @@
 {
-  "name": "projeto-17-linkr-front",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.27.2",
-    "date-fns": "^2.29.1",
+    "cors": "^2.8.5",
     "react": "^17.0.2",
     "react-debounce-input": "^3.3.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
     "react-loader-spinner": "^5.1.7-beta.1",
     "react-lottie": "^1.2.3",
+    "react-modal": "^3.15.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
     "react-tagify": "^0.1.4",
-    "react-toastify": "^9.0.8",
+    "react-tooltip": "^4.2.21",
     "styled-components": "^5.3.5",
-    "styled-reset": "^4.4.2",
-    "use-interval": "^1.4.0"
+    "styled-reset": "^4.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,8 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "file-loader": "^6.2.0"
   }
 }

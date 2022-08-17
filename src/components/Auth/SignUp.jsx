@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { Form, Rigth, Left, Container } from "../Login/Login";
+import { Form, Rigth, Left, Container } from "./Login.jsx";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUp() {
@@ -31,7 +31,7 @@ export default function SignUp() {
     setPostForm(clearSignUpInputs);
 
     const promise = axios.post(
-      "https://back-projeto17-linkr.herokuapp.com/sign-up",
+      `${process.env.REACT_APP_API_BASE_URL}/sign-up`,
       postForm
     );
     promise

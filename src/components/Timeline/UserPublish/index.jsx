@@ -1,66 +1,33 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import * as S from "./styles";
-import UserContext from "../../contexts/UserContext";
-
-
-import styled from "styled-components";
-
+import UserContext from "../../../context/userContext.js";
 
 export default function SendPostCard({ getPosts }) {
     const { image, token } = useContext(UserContext);
     const [url, setUrl] = useState("");
     const [article, setArticle] = useState("");
     const [loading, setLoading] = useState(false);
-   
-
-    function findHashtags(searchText) {
-        var regexp = /(\s|^)\#\w\w+\b/gm;
-        let result = searchText.match(regexp);
-        if (result) {
-            result = result.map(function (s) {
-                return s.trim();
-            });
-            return result;
-        } else {
-            return [];
-        }
-    }
-    function removeDuplicates(arr) {
-        const uniqueHashtag = arr.reduce(function (newArray, currentValue) {
-            if (!newArray.includes(currentValue))
-                newArray.push(currentValue);
-            return newArray;
-        }, []);
-        return uniqueHashtag;
-    }
 
     async function publish(e) {
-        console.log("to aqui")
-     
+        e.preventDefault();
         setLoading(true);
         try {
-            const hashtags = removeDuplicates(findHashtags(article));
-            console.log(hashtags)
-
             const post = {
                 url,
                 article,
-                hashtags,
             };
-            console.log(post)
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
             await axios.post(
-                `https://back-projeto17-linkr.herokuapp.com/posts`,
+                `${process.env.REACT_APP_API_BASE_URL}/posts`,
                 post,
                 config
             );
             await getPosts();
-            /* await getTrending(); */
             setLoading(false);
             setUrl("");
             setArticle("");
@@ -77,6 +44,7 @@ export default function SendPostCard({ getPosts }) {
         }
         return "Publish";
     }
+
     return (
      
         <S.BoxPublish>
@@ -96,9 +64,11 @@ export default function SendPostCard({ getPosts }) {
                             onChange={(e) => setUrl(e.target.value)}
                             value={url}
                             disabled={loading}
-                        ></input>                      
+                        ></input>
+                        
                         <input
                             type="text"
+                            maxLength={150}
                              placeholder="Awesome article about #javascript"
                              className="inputArticle"
                              onChange={(e) => setArticle(e.target.value)}

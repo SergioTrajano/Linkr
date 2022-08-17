@@ -1,41 +1,38 @@
-
-import Header from "../Header";
 import * as S from "./style";
-import Trending from "../Trending/index.jsx";
+import Trending from "../Timeline/Trending/index.jsx";
 import { useParams } from "react-router-dom";
 import { useState  , useEffect} from "react";
-import Post from "../../components/Post"
+import Post from "../Timeline/Post/index.jsx"
 import axios from "axios";
-
-
-
 
 
 export default function HashTag() {
     const {hashtag}=useParams()
-    console.log(hashtag)
 
     const [info , setInfo]=useState([])
    
     async function getPostsByHashtag() {
         try {
-            const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/hashtag/${hashtag}`);
+            const result = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`);
           
             setInfo(result.data);
-            console.log(result.data)
            
         } catch (e) {
             console.log(e);
-          
-          
         }
     }  
-useEffect(()=>{
-    getPostsByHashtag()
-},[])
+    useEffect(()=>{
+        const result =  axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`);
+        result.then(response => {
+            setInfo(response.data);
+        })
+        result.catch(e => {
+            console.log(e);
+        });
+    }, [hashtag])
    
 function renderPosts() {
-    console.log()
+   
         const timeline = info.map(
             ({
                 postId,
@@ -46,7 +43,8 @@ function renderPosts() {
                 urlDescription,
                 username,
                 pictureURL,
-                likes
+                likes,
+                userId,
             }) => (
                 <Post
                     key={postId}
@@ -56,13 +54,12 @@ function renderPosts() {
                     urlImage={urlImage}
                     urlDescription={urlDescription}
                     username={username}
+                    creatorId={userId}
                     pictureURL={pictureURL}
                     likes={likes}
                     postId={postId}
-                  
-                    // setPosts={setPosts}
-                    // getPosts={getPosts} 
-                /*     getTrending={getTrending} */
+                    setPosts={setInfo}
+                    getPosts={getPostsByHashtag} 
                 />
             )
         );
@@ -72,11 +69,7 @@ function renderPosts() {
 
 
     return (<>
-        <Header />
         <S.Main>
-            <S.TimelineContainer>
-                {"hashtag"}
-            </S.TimelineContainer>
             <S.ContentContainer>
                 <S.PostsContainer>
                     <S.UserData>

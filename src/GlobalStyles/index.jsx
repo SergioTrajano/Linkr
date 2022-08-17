@@ -28,5 +28,6 @@ export default createGlobalStyle`
         --color-button: #1877F2;
         --primary-font: "Lato", sans-serif;
         --secondary-font: "Oswald", sans-serif;
+        --thirdy-font: 'Passion One', cursive;
     }
 `;

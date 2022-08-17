@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
-import UserContext from "../../../contexts/UserContext.js";
+import UserContext from "../../context/userContext.js";
 
 export function Login() {
   const navigate = useNavigate();
-  const { setToken, setImage, setName } = useContext(UserContext);
+  const { setToken, setImage, setName, setShowHeader } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
-  
+
   function clearLoginInputs() {
     return {
       email: "",
@@ -34,16 +34,17 @@ export function Login() {
     setPostForm(clearLoginInputs);
 
     axios
-      .post("https://back-projeto17-linkr.herokuapp.com/login", loginPost)
+      .post(`${process.env.REACT_APP_API_BASE_URL}/login`, loginPost)
       .then((res) => {
         localStorage.setItem("isLogged",JSON.stringify({
             image:res.data.pictureUrl,
             name:res.data.username,
             token:res.data.token
         }));
-        setImage(res.data.pictureUrl);
+        setImage(res.data.pictureURL);
         setName(res.data.username);
         setToken(res.data.token);
+        setShowHeader(true);
         navigate("/timeline");
       })
       .catch((error) => {

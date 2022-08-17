@@ -1,8 +1,7 @@
 import * as S from "./style";
 import { useState , useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Trending( ){
@@ -11,7 +10,7 @@ const navigate=useNavigate()
     
     async function getTrending() {
         try {
-            const result = await axios.get(`https://back-projeto17-linkr.herokuapp.com/trending`);
+            const result = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`);
           
             setTrending(result.data);
            

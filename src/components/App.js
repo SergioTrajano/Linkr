@@ -1,13 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Timeline from "../pages/Timeline/index.jsx";
-import SignUp from "../pages/Auth/SignUp/SignUp.jsx";
-import { Login } from "../pages/Auth/Login/Login.jsx";
-import UserPage from "../pages/UserPage/index.jsx";
-import GlobalStyles from "../GlobalStyles";
-import UserContext from "../contexts/UserContext.js";
-import PrivateRoute from "../components/Routes/PrivateRoute";
-import PublicRoute from "../components/Routes/PublicRoute";
+
+import UserContext from "../context/userContext.js";
+import GlobalStyles from "../GlobalStyles/index.jsx";
+import PublicRoute from "./routes/PublicRoute.js";
+import PrivateRoute from "./routes/PrivateRoute.js";
+import { Login } from "./Auth/Login.jsx";
+import SignUp from "./Auth/SignUp.jsx"
+import Timeline from "./Timeline/index.jsx";
+import UserPage from "./Timeline/userComponent.js";
+import Header from "./Header/index.jsx";
 import HashTag from "./Hashtags/Hashtag.jsx";
 
 export default function App() {
@@ -15,7 +17,7 @@ export default function App() {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
-  const isAuthenticated = localStorage.getItem("isLogged");
+  const [showHeader, setShowHeader] = useState(false);
 
   const userContext = {
     token,
@@ -26,21 +28,23 @@ export default function App() {
     setName,
     userId,
     setUserId,
+    setShowHeader,
   };
 
   return (
     <BrowserRouter>
       <GlobalStyles />
       <UserContext.Provider value={userContext}>
+        {showHeader ? <Header /> : <></>}
         <Routes>
-          <Route element={<PublicRoute auth={isAuthenticated} />}>
+          <Route element={<PublicRoute auth={localStorage.getItem("isLogged")}/>}>
             <Route path="/" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
           </Route>
-          <Route element={<PrivateRoute auth={isAuthenticated} />}>
-            <Route path="/timeline" element={<Timeline />} />
+          <Route element={<PrivateRoute auth={localStorage.getItem("isLogged")}/>}>
             <Route path="/hashtag/:hashtag" element={<HashTag />} />
-            <Route path="/timeline/user/:id" element={<UserPage />} />
+            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/user/:id" element={<UserPage />} />
           </Route>
         </Routes>
       </UserContext.Provider>
