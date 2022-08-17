@@ -8,21 +8,20 @@ import Trending from "./Trending/index.jsx";
 
 
 export default function User() {
-    const userId = useParams().id;
+    const userId = parseInt(useParams().id);
     const [userPosts, setUserPosts] = useState([]);
     const [userData, setUserData] = useState("");
-    const { token } = useContext(UserContext);
+    const { token, id } = useContext(UserContext);
+    const [buttonFollowing, setBUttonFollowing] = useState(userId === id ? "" : "Loading...");
+    const [isDisabled, setIsDisabled] = useState(false);
     
-
     useEffect(() => {
-        console.log("to dentro")
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         };
         const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${userId}`, config);
-        console.log("to aqui")
         promise.then(response => {
             setUserPosts(response.data);
         });
@@ -42,6 +41,88 @@ export default function User() {
             setUserData(response.data[0]);
         })
     }, [token, userId]);
+
+    /*eslint-disable  react-hooks/exhaustive-deps */ 
+    function follow(e) {
+        e.preventDefault();
+        setIsDisabled(true);
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}/${userId}`, {},config);
+        promise.then(() => {
+            setBUttonFollowing(
+                <button 
+                        style={{color: "#1877F2", backgroundColor: "#FFFFFF" }}
+                        onClick={unfollow}
+                        disabled={isDisabled}    
+                    >
+                        Unfollow
+                    </button>);
+        })
+        promise.catch(() => {
+            alert("An error has occurred. Try again latter!");
+        });
+        setIsDisabled(false);
+    }
+
+    function unfollow(e) {
+        e.preventDefault();
+        setIsDisabled(true);
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}/${userId}`, config);
+        promise.then(() => {
+            setBUttonFollowing(
+                <button 
+                    style={{backgroundColor: "#1877F2", color: "var(--secondary-color)" }}
+                    onClick={follow}
+                >
+                    Follow
+                </button>);
+        })
+        promise.catch(() => {
+            alert("An error has occurred. Try again latter!");
+        });
+        setIsDisabled(false);
+    }
+
+    useEffect(() => {
+        if (userId === id) return;
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}/${userId}`, config);
+        promise.then((response) => {
+            if (response.data.length) {
+                setBUttonFollowing(
+                    <button 
+                        style={{color: "#1877F2", backgroundColor: "#FFFFFF" }}
+                        onClick={unfollow}
+                        disabled={isDisabled}    
+                    >
+                        Unfollow
+                    </button>);
+            }
+            else {
+                setBUttonFollowing(
+                    <button 
+                        style={{backgroundColor: "#1877F2", color: "var(--secondary-color)" }}
+                        onClick={follow}
+                        disabled={isDisabled}
+                    >
+                        Follow
+                    </button>);
+            }
+        })
+    }, [token, id, userId]);
 
     async function getPosts() {
         const config = {
@@ -106,16 +187,19 @@ export default function User() {
     return (
         <>
             <S.Main>
+            <S.UserData>
+                <h1>{userData ? userData.username + "'s posts" : ""}</h1>
+                {buttonFollowing}
+            </S.UserData>
                 <S.ContentContainer>
+                
                     <S.PostsContainer>
-                        <S.UserData>{userData ? userData.username + "'s posts" : ""}</S.UserData>
-                        <S.UserPublishContainer>
                         
-                        </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
-                    <Trending />
+                    
                     <S.SidebarContainer>
+                        <Trending />
                     </S.SidebarContainer>
                 </S.ContentContainer>
               

@@ -74,7 +74,7 @@ function renderPosts() {
                 <S.PostsContainer>
                     <S.UserData>
 
-                        #{`${hashtag}`}
+                        <h1>#{`${hashtag}`}</h1>
 
                     </S.UserData>
                     <S.UserPublishContainer>
@@ -85,9 +85,9 @@ function renderPosts() {
                     </S.UserPublishContainer>
 
                 </S.PostsContainer>
-                <Trending />
+               
                 <S.SidebarContainer>
-
+                    <Trending />
                 </S.SidebarContainer>
             </S.ContentContainer>
 

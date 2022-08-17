@@ -4,11 +4,13 @@ import device from "../../utils/devicesSizes.js";
 
 export const Main = styled.main`
     width: 100%;
+
     z-index: -2;
     position: absolute;
     height: calc(100vh - 72px);
     display: flex;
     flex-direction: column;
+    align-items: center;
     overflow: auto;
     margin-top: calc(72px + 74px);
     @media ${device.desktop} {
@@ -16,21 +18,49 @@ export const Main = styled.main`
     }
 `;
 
-export const UserData = styled.h1`
-    width: 100%;
+export const UserData = styled.div`
+    width: 611px;
+    max-width: 100vw;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-family: var(--secondary-font);
-    font-weight: 700;
-    font-size: 33px;
-    line-height: 49px;
-    color: var(--secondary-color);
-    margin: 19px 17px 19px;
-    display: none;
+    padding: 53px 20px 41px 20px;
+
+    h1 {
+        font-weight: 700;
+        font-size: 33px;
+        line-height: 49px;
+        color: var(--secondary-color);
+        
+    }
+
+    button {
+        width: 134px;
+        height: 37px;
+        border-radius: 5px;
+        border: none;
+        font-size: 18px;
+        line-height: 21px;
+        font-family: var(--primary-font);
+        padding: 10px 20px;
+        font-weight:  bold;
+
+        &:disabled {
+            opacity: 0.8;
+        }
+    }
+    
     @media ${device.desktop} {
-        font-size: 43px;
-        line-height: 64px;
-        margin: 53px 0 41px;
-        display: flex;
+        h1 {
+            font-size: 43px;
+            line-height: 64px;
+        }
+        
+    }
+
+    @media ${device.sidebar} {
+        width: 970px;
     }
 `;
 
@@ -63,7 +93,6 @@ export const SidebarContainer = styled.div`
         width: auto;
         height: 100%;
         display: flex;
-        margin-top: 158px;
     }
 `;
 

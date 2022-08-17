@@ -24,6 +24,7 @@ export const PostContainer = styled.div`
     align-items: center;
     background-color: var(--primary-color);
     padding: 10px 15px 15px;
+    border-radius: 16px 16px 16px 16px;
     .classTooltip {
         color: #505050;
         background-color: white;
@@ -35,13 +36,13 @@ export const PostContainer = styled.div`
         justify-content: center;
         align-items: center;
         padding: 5px;
+        
     }
     @media ${device.desktop} {
         max-width: 611px;
         height: 276px;
         padding: 18px;
-        border-radius: ${({ openComments }) =>
-            openComments ? "16px 16px 0 0" : "16px 16px 16px 16px"};
+
     }
 `;
 

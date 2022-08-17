@@ -16,8 +16,8 @@ export default function App() {
   const [token, setToken] = useState("");
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
-  const [userId, setUserId] = useState("");
   const [showHeader, setShowHeader] = useState(false);
+  const [id, setId] = useState("");
 
   const userContext = {
     token,
@@ -26,8 +26,9 @@ export default function App() {
     setImage,
     name,
     setName,
-    userId,
-    setUserId,
+    id,
+    setId,
+
     setShowHeader,
   };
 

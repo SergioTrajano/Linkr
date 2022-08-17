@@ -94,14 +94,17 @@ const Timeline = () => {
             <S.Main>
                 <S.ContentContainer>
                     <S.PostsContainer>
-                        <S.UserData>timeline</S.UserData>
+                        <S.UserData>
+                            <h1>timeline</h1>
+                        </S.UserData>
                         <S.UserPublishContainer>
                         <SendPostCard getPosts={getPosts} />
                         </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
-                    <Trending />
+                    
                     <S.SidebarContainer>
+                        <Trending />
                     </S.SidebarContainer>
                 </S.ContentContainer>
             </S.Main>
