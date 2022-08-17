@@ -3,10 +3,10 @@ import { useState } from "react";
 
 import UserContext from "../context/userContext.js";
 import GlobalStyles from "../GlobalStyles/index.jsx";
-import PublicRoute from "./routes/PublicRoute.js";
-import PrivateRoute from "./routes/PrivateRoute.js";
+import PublicRoute from "./Routes/PublicRoute.js";
+import PrivateRoute from "./Routes/PrivateRoute.js";
 import { Login } from "./Auth/Login.jsx";
-import SignUp from "./Auth/SignUp.jsx"
+import SignUp from "./Auth/SignUp.jsx";
 import Timeline from "./Timeline/index.jsx";
 import UserPage from "./Timeline/userComponent.js";
 import Header from "./Header/index.jsx";
@@ -37,11 +37,15 @@ export default function App() {
       <UserContext.Provider value={userContext}>
         {showHeader ? <Header /> : <></>}
         <Routes>
-          <Route element={<PublicRoute auth={localStorage.getItem("isLogged")}/>}>
+          <Route
+            element={<PublicRoute auth={localStorage.getItem("isLogged")} />}
+          >
             <Route path="/" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
           </Route>
-          <Route element={<PrivateRoute auth={localStorage.getItem("isLogged")}/>}>
+          <Route
+            element={<PrivateRoute auth={localStorage.getItem("isLogged")} />}
+          >
             <Route path="/hashtag/:hashtag" element={<HashTag />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/user/:id" element={<UserPage />} />
