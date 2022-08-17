@@ -10,7 +10,6 @@ import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../../context/userContext.js";
 import animationDataLike from "../assets/like-icon.json";
-import animationDataDelete from "../assets/delete-icon.json";
 import AiOutlineComment from 'react-icons'
 import IoPaperPlaneOutline from 'react-icons'
 import { ReactTagify } from "react-tagify"; 
@@ -28,6 +27,7 @@ export default function PostCard({
     likes,
     postId,
     getPosts,
+    numberComments
 }) {
 
     const { token, name } = useContext(UserContext);
@@ -35,8 +35,9 @@ export default function PostCard({
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
     const [like, setLike] = useState(likes?.length);
-    const [comment, setComment]= useState(comments.length)
+    const [commentInput, setCommentInput]= useState("")
     const [commentScreen,setCommentScreen]=useState(false)
+    const [comments,setComments]=useState()
     const [show, setShow] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState("");
     const [isDisabled, setIsDisabled] = useState("");
@@ -53,7 +54,6 @@ export default function PostCard({
         },
     };
     
-
     const tagStyle = {
         fontFamily: "Lato",
         fontSize: "18px",
@@ -63,11 +63,13 @@ export default function PostCard({
         textAlign: "left",
         color: "#FAFAFA",
     };
+
     const [animationLikeState, setAnimationLikeState] = useState({
         isStopped: false,
         isPaused: true,
         direction: likes.some(e => e.username === name) ? 1 : -1,
     });
+
     const likeDefaultOptions = {
         loop: false,
         autoplay: likes.some(e => e.username === name),
@@ -77,18 +79,6 @@ export default function PostCard({
         },
     };
 
-    const [animationDeleteState, setAnimationDeleteState] = useState({
-        isStopped: false,
-        isPaused: false,
-        direction: 1,
-        speed: 0.09,
-        eventListeners: [
-            {
-                eventName: "complete",
-                callback: reloadPage,
-            },
-        ],
-    });
 
     const filterLikes=likes.filter((e)=>e.username!==name)
 
@@ -120,21 +110,6 @@ export default function PostCard({
     }
    
     const [tooltip,setTooltip]=useState(tooltipIfs)
-
-    const deleteDefaultOptions = {
-        loop: false,
-        autoplay: false,
-        animationData: animationDataDelete,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice",
-        },
-        eventListeners: [
-            {
-                eventName: "complete",
-                callback: () => console.log("the animation completed:"),
-            },
-        ],
-    };
 
     const normalAnimation = 1;
     const reverseAnimation = -1;
@@ -192,7 +167,6 @@ export default function PostCard({
             isStopped: true,
             direction: reverseAnimation,
         });
-
         setLike(like - 1);
     }
 
@@ -205,8 +179,8 @@ export default function PostCard({
                 )
 
             promise.then(() => removeLike())
-
             promise.catch((e) => alert(e));
+
         } else {
             const promise = axios
                 .post(
@@ -216,7 +190,6 @@ export default function PostCard({
                 )
 
             promise.then(() => addLike())
-
             promise.catch((e) => console.log(e));
         }
     }
@@ -227,26 +200,27 @@ export default function PostCard({
         setShow(false);
     }
 
-    function removedPostSuccess(s) {
-        setAnimationDeleteState({ ...animationDeleteState, isPaused: false });
+    
+    function apiComments(){
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/comments/${postId}`,config)
+        .then(e=>{
+            setComments(e.data)
+            setCommentScreen(true)
+        })
+        .catch(e=>alert(e.response.data))
     }
 
-    function error(e) {
-        setAnimationDeleteState({ ...animationDeleteState, isPaused: true });
-        setIsDisabled("");
-        alert(e);
-    }
-
-    function removePost() {
-        setIsDisabled("disabled");
-
-        const promise = axios
-            .delete(
-                `${process.env.REACT_APP_API_BASE_URL}/`,
-                config
-            )
-        promise.then(() => removedPostSuccess())
-        promise.catch((e) => error(e));
+    function postComment(){
+        setCommentInput("")
+        const commentRequest={
+            text:commentInput,
+            postId
+        }
+        if(commentInput){
+            axios.post(`${process.env.REACT_APP_API_BASE_URL}/comments`,config,commentRequest)
+            .then(()=>apiComments())
+            .catch(e=>alert(e.response.data))
+        }
     }
 
     return (
@@ -295,8 +269,8 @@ export default function PostCard({
                     <h6>{like} likes</h6>
                     </span>
                     <ReactTooltip />
-                    <AiOutlineComment onClick={()=>setCommentScreen(true)}/>
-                    <h6>{comments} comments</h6>
+                    <AiOutlineComment onClick={apiComments}/>
+                    <h6>{numberComments} comments</h6>
                 </ProfilePhoto>
 
                 <S.PostContentContainer>
@@ -327,13 +301,11 @@ export default function PostCard({
                                 tagClicked={(tag) => {
                                     const tagWithoutHash = tag.replace("#", "");
                                     navigate(`/hashtag/${tagWithoutHash}`);
-                                }}
-                            >
+                                }}>
                                 <p style={{color: "#9B9595"}}>{originalBody}</p>
                             </ReactTagify>
                         ) : (
                             <S.PostForm onSubmit={(e) => updateBody(e)}>
-                        
                                 <S.PostInput
                                     type="text"
                                     ref={inputRef}
@@ -344,13 +316,9 @@ export default function PostCard({
                                     onKeyUpCapture={(e) => handleKeyPress(e)}
                                     required
                                 />
-                        </S.PostForm>
+                            </S.PostForm>
                         )}
                     
-
-
-
-
 
                         <S.PostLinkPreviewContainer href={url} target="_blank">
                                 <S.PostLinkContent>
@@ -367,10 +335,9 @@ export default function PostCard({
                                 <S.PostLinkImage src={urlImage} alt={urlTitle}/>
                         </S.PostLinkPreviewContainer>
 
-                        {(commentScreen 
-                        ? 
+                        {(commentScreen ? 
                         <AllComments>
-                            {comment.map(e=>
+                            {comments.map(e=>
                             <Comment>
                                 {e.pictureURL}
                                 <CommentText>
@@ -379,13 +346,17 @@ export default function PostCard({
                                     </span>
                                     <p> {e.text} </p>
                                 </CommentText>
-                            </Comment> 
+                            </Comment>
                             )}
                             <WriteComment >
                                 {pictureURL}
                                 <CommentText>
-                                    <input placeholder='write a comment...' />
-                                    <IoPaperPlaneOutline/>
+                                    <input 
+                                    type='text'
+                                    placeholder='write a comment...'
+                                    value={commentInput}
+                                    onChange={(e)=>setCommentInput([...commentInput,e.target.value])} />
+                                    <IoPaperPlaneOutline onClick={postComment} />
                                 </CommentText>
                             </WriteComment>
                         </AllComments>
