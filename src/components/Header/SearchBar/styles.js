@@ -51,13 +51,17 @@ const SearchBarDataResult = styled.div`
         display: flex;
         align-items: center;
         cursor: pointer;
+        font-size: 19px;
+        font-family: var(--primary-font);
 
         p {
             margin-left: 12px;
             font-weight: 400;
             color: #515151;
-            font-size: 19px;
-            font-family: var(--primary-font);
+        }
+
+        span {
+            color: #C5C5C5;
         }
 
     }
