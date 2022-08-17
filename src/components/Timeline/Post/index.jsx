@@ -301,58 +301,58 @@ export default function PostCard({
 
                 <S.PostContentContainer>
 
-                <S.PostUserName>
-                <Link to={`/user/${creatorId}`}>
-                    <h3 >{username}</h3>
-                </Link>
-                
-                        <S.IconsContainer  >
-
-                        <TiPencil
-                            onClick={() => {if(name===username) setTextEdit(!textEdit)}}
-                            className="icon-post"
-                        />
+                    <S.PostUserName>
+                    <Link to={`/user/${creatorId}`}>
+                        <h3 >{username}</h3>
+                    </Link>
                     
-                        <FaTrash
-                            onClick={() => {if (name===username) setModalDisplay("flex")}}
-                            className="icon-post"
-                        />
-                        </S.IconsContainer>  
-                
+                            <S.IconsContainer  >
 
-                </S.PostUserName>
-                {textEdit === false ? (
-                        <ReactTagify
-                            tagStyle={tagStyle}
-                            tagClicked={(tag) => {
-                                const tagWithoutHash = tag.replace("#", "");
-                                navigate(`/hashtag/${tagWithoutHash}`);
-                            }}
-                        >
-                            <p style={{color: "#9B9595"}}>{originalBody}</p>
-                        </ReactTagify>
-                    ) : (
-                        <S.PostForm onSubmit={(e) => updateBody(e)}>
-                    
-                            <S.PostInput
-                                type="text"
-                                ref={inputRef}
-                                placeholder="Awesome article about #javascript"
-                                onChange={(e) => setBodyValue(e.target.value)}
-                                value={bodyValue}
-                                disabled={isInputDisabled}
-                                onKeyUpCapture={(e) => handleKeyPress(e)}
-                                required
+                            <TiPencil
+                                onClick={() => {if(name===username) setTextEdit(!textEdit)}}
+                                className="icon-post"
                             />
-                    </S.PostForm>
-                    )}
-                
+                        
+                            <FaTrash
+                                onClick={() => {if (name===username) setModalDisplay("flex")}}
+                                className="icon-post"
+                            />
+                            </S.IconsContainer>  
+                    
+
+                    </S.PostUserName>
+                    {textEdit === false ? (
+                            <ReactTagify
+                                tagStyle={tagStyle}
+                                tagClicked={(tag) => {
+                                    const tagWithoutHash = tag.replace("#", "");
+                                    navigate(`/hashtag/${tagWithoutHash}`);
+                                }}
+                            >
+                                <p style={{color: "#9B9595"}}>{originalBody}</p>
+                            </ReactTagify>
+                        ) : (
+                            <S.PostForm onSubmit={(e) => updateBody(e)}>
+                        
+                                <S.PostInput
+                                    type="text"
+                                    ref={inputRef}
+                                    placeholder="Awesome article about #javascript"
+                                    onChange={(e) => setBodyValue(e.target.value)}
+                                    value={bodyValue}
+                                    disabled={isInputDisabled}
+                                    onKeyUpCapture={(e) => handleKeyPress(e)}
+                                    required
+                                />
+                        </S.PostForm>
+                        )}
+                    
 
 
 
 
 
-                    <S.PostLinkPreviewContainer href={url} target="_blank">
+                        <S.PostLinkPreviewContainer href={url} target="_blank">
                                 <S.PostLinkContent>
                                     <span>
                                         <S.PostLinkTitle>
@@ -365,31 +365,41 @@ export default function PostCard({
                                     <S.PostLinkUrl>{url}</S.PostLinkUrl>
                                 </S.PostLinkContent>
                                 <S.PostLinkImage src={urlImage} alt={urlTitle}/>
-                    </S.PostLinkPreviewContainer>
+                        </S.PostLinkPreviewContainer>
 
-                        {(commentScreen ? 
-                        (
-                        comment.map(e=>
-                        <Comentario>
-                            {e.pictureURL}
-                            <CommentText>
-                                {e.username} {e.username===username ? <>• post's author</> : <></>}
-                                {e.text}
-                            </CommentText>
-                        </Comentario> ),
-                        
+                        {(commentScreen 
+                        ? 
+                        <AllComments>
+                            {comment.map(e=>
+                            <Comment>
+                                {e.pictureURL}
+                                <CommentText>
+                                    <span> 
+                                        {e.username} {e.username===username ? <>• post's author</> : <></>} 
+                                    </span>
+                                    <p> {e.text} </p>
+                                </CommentText>
+                            </Comment> 
+                            )}
+                            <WriteComment >
+                                {pictureURL}
+                                <CommentText>
+                                    <input placeholder='write a comment...' />
+                                    <IoPaperPlaneOutline/>
+                                </CommentText>
+                            </WriteComment>
+                        </AllComments>
+                            
+                        : 
                         <WriteComment >
-                            {pictureURL}
+                                {pictureURL}
                             <CommentText>
                                 <input placeholder='write a comment...' />
                                 <IoPaperPlaneOutline/>
                             </CommentText>
                         </WriteComment>
-                        )
-                        
-                        : <></>
                         )}
-                    </S.PostContentContainer>
+                </S.PostContentContainer>
 
             </S.PostContainer >
 
