@@ -51,7 +51,7 @@ export default function User() {
                 Authorization: `Bearer ${token}`
             }
         };
-        const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}/${userId}`, {},config);
+        const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/follows/${userId}/${id}`, {},config);
         promise.then(() => {
             setBUttonFollowing(
                 <button 
@@ -76,7 +76,7 @@ export default function User() {
                 Authorization: `Bearer ${token}`
             }
         };
-        const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}/${userId}`, config);
+        const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/follows/${userId}/${id}`, config);
         promise.then(() => {
             setBUttonFollowing(
                 <button 
@@ -99,7 +99,7 @@ export default function User() {
                 Authorization: `Bearer ${token}`
             }
         };
-        const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}/${userId}`, config);
+        const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/follows/${userId}/${id}`, config);
         promise.then((response) => {
             if (response.data.length) {
                 setBUttonFollowing(

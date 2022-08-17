@@ -67,6 +67,7 @@ export default function PostCard({
 
     const filterLikes=likes.filter(e => e.userId === id);
 
+    /* eslint-disable react-hooks/exhaustive-deps*/
     function tooltipIfs() {
         if(animationLikeState.direction===1) {
             if(filterLikes.length>1){
