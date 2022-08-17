@@ -34,17 +34,9 @@ export default function PostCard({
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
     const [like, setLike] = useState(likes?.length);
-    const [show, setShow] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState("");
-    const [isDisabled, setIsDisabled] = useState("");
     const navigate = useNavigate();
     const inputRef = useRef();
-    const [articleLog, setArticleLog] = useState(article);
-    const [editPostState, setEditPostState] = useState(false);
-    const handleClose = () => setShow(false);
-    const toggleEditing = () => {
-        setTextEdit(!textEdit);
-    };
     const [modalDisplay, setModalDisplay] = useState("none");
     const config = {
         headers: {
@@ -76,20 +68,7 @@ export default function PostCard({
         },
     };
 
-    const [animationDeleteState, setAnimationDeleteState] = useState({
-        isStopped: false,
-        isPaused: false,
-        direction: 1,
-        speed: 0.09,
-        eventListeners: [
-            {
-                eventName: "complete",
-                callback: reloadPage,
-            },
-        ],
-    });
-
-    const filterLikes=likes.filter((e)=>e.username!==name)
+    const filterLikes=likes.filter((e) => e.username!==name)
 
     function tooltipIfs() {
         if(animationLikeState.direction===1) {
@@ -119,21 +98,6 @@ export default function PostCard({
     }
    
     const [tooltip,setTooltip]=useState(tooltipIfs)
-
-    const deleteDefaultOptions = {
-        loop: false,
-        autoplay: false,
-        animationData: animationDataDelete,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice",
-        },
-        eventListeners: [
-            {
-                eventName: "complete",
-                callback: () => console.log("the animation completed:"),
-            },
-        ],
-    };
 
     const normalAnimation = 1;
     const reverseAnimation = -1;
@@ -218,34 +182,6 @@ export default function PostCard({
 
             promise.catch((e) => console.log(e));
         }
-    }
-
-    function reloadPage() {
-        getPosts();
-        setIsDisabled("");
-        setShow(false);
-    }
-
-    function removedPostSuccess(s) {
-        setAnimationDeleteState({ ...animationDeleteState, isPaused: false });
-    }
-
-    function error(e) {
-        setAnimationDeleteState({ ...animationDeleteState, isPaused: true });
-        setIsDisabled("");
-        alert(e);
-    }
-
-    function removePost() {
-        setIsDisabled("disabled");
-
-        const promise = axios
-            .delete(
-                `${process.env.REACT_APP_API_BASE_URL}/`,
-                config
-            )
-        promise.then(() => removedPostSuccess())
-        promise.catch((e) => error(e));
     }
 
     return (

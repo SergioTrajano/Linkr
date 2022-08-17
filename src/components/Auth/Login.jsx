@@ -6,7 +6,7 @@ import UserContext from "../../context/userContext.js";
 
 export function Login() {
   const navigate = useNavigate();
-  const { setToken, setImage, setName, setShowHeader } = useContext(UserContext);
+  const { setToken, setImage, setName, setShowHeader, setId } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   function clearLoginInputs() {
@@ -39,12 +39,14 @@ export function Login() {
         localStorage.setItem("isLogged",JSON.stringify({
             image:res.data.pictureUrl,
             name:res.data.username,
-            token:res.data.token
+            token:res.data.token,
+            id: res.data.id,
         }));
         setImage(res.data.pictureURL);
         setName(res.data.username);
         setToken(res.data.token);
         setShowHeader(true);
+        setId(res.data.id);
         navigate("/timeline");
       })
       .catch((error) => {

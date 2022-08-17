@@ -43,7 +43,6 @@ export const BoxPublish = styled.div`
 
 export const Container = styled.div`
     position: relative;
-    margin-top: 5px;
     display: flex;
     background-color: var(--secondary-color);
     width: 100%;
