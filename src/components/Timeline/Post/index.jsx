@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import Lottie from "react-lottie";
-/* import { toast } from "react-toastify"; */
 import ReactTooltip from 'react-tooltip';
 import styled from "styled-components";
 import * as S from "./styles";
@@ -10,7 +9,6 @@ import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../../context/userContext.js";
 import animationDataLike from "../assets/like-icon.json";
-import animationDataDelete from "../assets/delete-icon.json";
 
 import { ReactTagify } from "react-tagify"; 
 
@@ -29,7 +27,7 @@ export default function PostCard({
     getPosts,
 }) {
 
-    const { token, name } = useContext(UserContext);
+    const { token, id } = useContext(UserContext);
     const [bodyValue, setBodyValue] = useState(article);
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
@@ -44,7 +42,6 @@ export default function PostCard({
         },
     };
     
-
     const tagStyle = {
         fontFamily: "Lato",
         fontSize: "18px",
@@ -57,18 +54,18 @@ export default function PostCard({
     const [animationLikeState, setAnimationLikeState] = useState({
         isStopped: false,
         isPaused: true,
-        direction: likes.some(e => e.username === name) ? 1 : -1,
+        direction: likes.some(e => e.userId === id) ? 1 : -1,
     });
     const likeDefaultOptions = {
         loop: false,
-        autoplay: likes.some(e => e.username === name),
+        autoplay: likes.some(e => e.userId === id),
         animationData: animationDataLike,
         rendererSettings: {
             preserveAspectRatio: "xMidYMid slice",
         },
     };
 
-    const filterLikes=likes.filter((e) => e.username!==name)
+    const filterLikes=likes.filter(e => e.userId === id);
 
     function tooltipIfs() {
         if(animationLikeState.direction===1) {
@@ -242,12 +239,12 @@ export default function PostCard({
                         <S.IconsContainer  >
 
                         <TiPencil
-                            onClick={() => {if(name===username) setTextEdit(!textEdit)}}
+                            onClick={() => {if(id===creatorId) setTextEdit(!textEdit)}}
                             className="icon-post"
                         />
                     
                         <FaTrash
-                            onClick={() => {if (name===username) setModalDisplay("flex")}}
+                            onClick={() => {if (id===creatorId) setModalDisplay("flex")}}
                             className="icon-post"
                         />
                         </S.IconsContainer>  
