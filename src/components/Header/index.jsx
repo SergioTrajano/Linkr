@@ -24,10 +24,7 @@ const Header = () => {
     }
 
     return (
-        <S.HeaderContainer 
-        onClick={()=>{
-            if (logoutScreen) setLogoutScreen(false)
-        }}>
+        <S.HeaderContainer tabIndex={0} onBlur={showScreen}>
             <S.Header>
                 <Link to="/timeline">
                     <S.Logo >linkr</S.Logo>
