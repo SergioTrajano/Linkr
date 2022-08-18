@@ -160,7 +160,7 @@ export default function PostCard({
     }
 
     function postLike() {
-        if (creatorId === id) return;
+        if (creatorId === id) return 0;
         if (animationLikeState.direction === 1) {
             const promise = axios
                 .delete(
