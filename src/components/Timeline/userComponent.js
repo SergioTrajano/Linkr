@@ -14,6 +14,7 @@ export default function User() {
     const { token, id } = useContext(UserContext);
     const [buttonFollowing, setBUttonFollowing] = useState(userId === id ? "" : "Loading...");
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
         const config = {
@@ -24,6 +25,7 @@ export default function User() {
         const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${userId}`, config);
         promise.then(response => {
             setUserPosts(response.data);
+            setIsLoading(false);
         });
     }, [token, userId]);
     
@@ -135,6 +137,7 @@ export default function User() {
     }
 
     function renderPosts() {
+        if (isLoading) return <span>Loading...</span>;
         if (userPosts.length) {
             const timeline = userPosts.map(
                 ({
@@ -168,8 +171,7 @@ export default function User() {
             );
             return timeline;
         }
-        if (!userPosts.length) return <span>There are no posts yet</span>;
-        return <span>Loading...</span>;
+        return <span>There are no posts yet</span>;
     }
 
     return (
