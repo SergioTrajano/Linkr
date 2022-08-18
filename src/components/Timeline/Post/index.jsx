@@ -212,12 +212,8 @@ export default function PostCard({
 
     function postComment(){
         setCommentInput("")
-        const commentRequest={
-            text:commentInput,
-            postId
-        }
         if(commentInput){
-            axios.post(`${process.env.REACT_APP_API_BASE_URL}/comments`,config,commentRequest)
+            axios.post(`${process.env.REACT_APP_API_BASE_URL}/comments/${postId}`,config,commentInput)
             .then(()=>apiComments())
             .catch(e=>alert(e.response.data))
         }
