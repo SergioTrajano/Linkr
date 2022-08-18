@@ -17,7 +17,8 @@
     "react-tagify": "^0.1.4",
     "react-tooltip": "^4.2.21",
     "styled-components": "^5.3.5",
-    "styled-reset": "^4.4.2"
+    "styled-reset": "^4.4.2",
+    "use-interval": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

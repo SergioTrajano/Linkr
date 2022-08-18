@@ -10,8 +10,8 @@ import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../../context/userContext.js";
 import animationDataLike from "../assets/like-icon.json";
-import AiOutlineComment from 'react-icons'
-import IoPaperPlaneOutline from 'react-icons'
+import {AiOutlineComment} from 'react-icons/ai'
+import {IoPaperPlaneOutline} from 'react-icons/io5'
 import { ReactTagify } from "react-tagify"; 
 
 export default function PostCard({
@@ -331,11 +331,11 @@ export default function PostCard({
                                 <S.PostLinkImage src={urlImage} alt={urlTitle}/>
                         </S.PostLinkPreviewContainer>
 
-                        {(commentScreen ? 
+                        {(commentScreen ? (
                         <AllComments>
                             {comments.map(e=>
                             <Comment>
-                                {e.pictureURL}
+                               <img src={e.pictureURL} /> 
                                 <CommentText>
                                     <span> 
                                         {e.username} {e.username===username ? <>• post's author</> : <></>} 
@@ -345,7 +345,7 @@ export default function PostCard({
                             </Comment>
                             )}
                             <WriteComment >
-                                {pictureURL}
+                            <img src={pictureURL} /> 
                                 <CommentText>
                                     <input 
                                     type='text'
@@ -356,15 +356,8 @@ export default function PostCard({
                                 </CommentText>
                             </WriteComment>
                         </AllComments>
-                            
-                        : 
-                        <WriteComment >
-                                {pictureURL}
-                            <CommentText>
-                                <input placeholder='write a comment...' />
-                                <IoPaperPlaneOutline/>
-                            </CommentText>
-                        </WriteComment>
+                        )
+                        : <></>
                         )}
                 </S.PostContentContainer>
 
@@ -452,5 +445,40 @@ const Modal = styled.div`
             }
         }
     }
+`
+const AllComments=styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color:#1E1E1E;
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+`
+const Comment=styled.div`
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #353535;
+    display:flex;
+    justify-content: start;
+    img{
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+`
+const WriteComment=styled.div`
+    height: 70px;
+    width: 100%;
+    display:flex;
+    justify-content: start;
+    img{
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+`  
+const CommentText=styled.div`
+    width: 90%;
+    background-color: #252525;
 `
 
