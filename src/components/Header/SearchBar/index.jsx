@@ -29,7 +29,7 @@ const SearchBar = () => {
                             setSearchResult([]);
                             return;
                         }
-                        const promise = axios.get(`http://localhost:4000/users?name=${event.target.value}&followerId=${id}`, config);
+                        const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users?name=${event.target.value}&followerId=${id}`, config);
                         promise.then(response => {
                             setSearchResult(response.data);
                         });
