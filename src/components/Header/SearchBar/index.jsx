@@ -9,7 +9,7 @@ import UserContext from "../../../context/userContext";
 
 // eslint-disable-next-line no-unused-vars
 const SearchBar = () => {
-    const { token } = useContext(UserContext);
+    const { token, id } = useContext(UserContext);
     const [serachResult, setSearchResult] = useState([]);
 
  
@@ -29,7 +29,7 @@ const SearchBar = () => {
                             setSearchResult([]);
                             return;
                         }
-                        const promise = axios.get(`http://localhost:4000/users?name=${event.target.value}`, config);
+                        const promise = axios.get(`http://localhost:4000/users?name=${event.target.value}&followerId=${id}`, config);
                         promise.then(response => {
                             setSearchResult(response.data);
                         });
@@ -44,7 +44,8 @@ const SearchBar = () => {
             <S.SearchBarDataResult>
                 {serachResult.length ? serachResult.map((c, i) => <Link key={i} to={`/user/${c.id}`} onClick={() => setSearchResult([])}>
                     <S.UserImage src={`${c.pictureURL}`}></S.UserImage>
-                    <p>{c.username}</p>
+                    <p>{c.username} {c.isFollowing ? <span>• following</span> : ""}</p>
+
                 </Link>) : <></>}
             </S.SearchBarDataResult>
         </S.SearchBarContainer>
