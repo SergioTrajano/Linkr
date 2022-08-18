@@ -25,8 +25,6 @@ export default function User() {
         promise.then(response => {
             setUserPosts(response.data);
         });
-
-        
     }, [token, userId]);
     
     useEffect(() => {
@@ -127,23 +125,13 @@ export default function User() {
     async function getPosts() {
         const config = {
             headers: {
-                Authorization: `Bearer ${token}`,
-            },
+                Authorization: `Bearer ${token}`
+            }
         };
-        try {
-            const result = await axios.get(
-                `${process.env.REACT_APP_API_BASE_URL}/posts`,
-                config
-            );
-           
-            setUserPosts(result.data);
-
-        } catch (e) {
-            alert(
-                "An error occured while trying to fetch the posts, please refresh the page"
-            );
-            console.log(e);
-        }
+        const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${userId}`, config);
+        promise.then(response => {
+            setUserPosts(response.data);
+        });
     }
 
     function renderPosts() {

@@ -9,6 +9,7 @@ import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../../context/userContext.js";
 import animationDataLike from "../assets/like-icon.json";
+import { ThreeDots } from "react-loader-spinner";
 
 import { ReactTagify } from "react-tagify"; 
 
@@ -36,6 +37,7 @@ export default function PostCard({
     const navigate = useNavigate();
     const inputRef = useRef();
     const [modalDisplay, setModalDisplay] = useState("none");
+    const [isDeleting, setIsDeleting] = useState(false);
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -185,6 +187,7 @@ export default function PostCard({
     return (
     <>
         <Modal modalDisplay={modalDisplay}>
+            {isDeleting ? <ThreeDots color="blue"/> :
             <div>
                 <p>
                     Are you sure you want
@@ -195,17 +198,23 @@ export default function PostCard({
                         No, go back
                     </button>
                     <button onClick={() => {
+                        setIsDeleting(true);
                         const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/posts/${postId}`, config);
                         promise.then(() => {
                             getPosts();
-                            setModalDisplay("flex")
+                            setModalDisplay("none");
+                            setIsDeleting(false);
+                        });
+                        promise.catch(() => {
+                            setModalDisplay("none");
+                            alert("It wasn't possible to delete the post. Try again later!");
                         })
                     }
                     }>
                         Yes, delete it
                     </button>
                 </div>
-            </div>
+            </div>}
         </Modal>
         <S.Wrapper >
             <S.PostContainer key={key}>
