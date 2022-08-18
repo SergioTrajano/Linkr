@@ -9,6 +9,7 @@ import { FaTrash } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import UserContext from "../../../context/userContext.js";
 import animationDataLike from "../assets/like-icon.json";
+import { ThreeDots } from "react-loader-spinner";
 
 import { ReactTagify } from "react-tagify"; 
 
@@ -36,6 +37,7 @@ export default function PostCard({
     const navigate = useNavigate();
     const inputRef = useRef();
     const [modalDisplay, setModalDisplay] = useState("none");
+    const [isDeleting, setIsDeleting] = useState(false);
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -185,6 +187,7 @@ export default function PostCard({
     return (
     <>
         <Modal modalDisplay={modalDisplay}>
+            {isDeleting ? <ThreeDots color="blue"/> :
             <div>
                 <p>
                     Are you sure you want
@@ -195,17 +198,23 @@ export default function PostCard({
                         No, go back
                     </button>
                     <button onClick={() => {
+                        setIsDeleting(true);
                         const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/posts/${postId}`, config);
                         promise.then(() => {
                             getPosts();
-                            setModalDisplay("flex")
+                            setModalDisplay("none");
+                            setIsDeleting(false);
+                        });
+                        promise.catch(() => {
+                            setModalDisplay("none");
+                            alert("It wasn't possible to delete the post. Try again later!");
                         })
                     }
                     }>
                         Yes, delete it
                     </button>
                 </div>
-            </div>
+            </div>}
         </Modal>
         <S.Wrapper >
             <S.PostContainer key={key}>
@@ -339,6 +348,7 @@ const Modal = styled.div`
 
     > div {
         width: 597px;
+        max-width: 100vw;
         height: 267px;
         background-color: #333333;
         display: flex;
@@ -349,22 +359,25 @@ const Modal = styled.div`
 
         p {
             font-family: var(--primary-font);
-            font-size: 34px;
-            line-height: 38px;
+            font-size: 3.3vh;
+            line-height: 3.7vh;
             font-weight: bold;
             color: var(--secondary-color);
             margin-bottom: 20px;
             text-align: center;
+            width: 300px;
+            max-width: 80vw;
         }
 
         > div {
             display: flex;
             justify-content: space-between;
             width: 300px;
+            max-width: 100vw;
 
             > button {
                 width: 134px;
-                height: 37px;
+                max-width: 40vw;
                 border-radius: 5px;
                 border: none;
                 font-size: 18px;
