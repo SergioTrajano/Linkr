@@ -10,7 +10,7 @@ import UserContext from "../../context/userContext.js";
 
 const Header = () => {
     const [ logoutScreen, setLogoutScreen] = useState(false);
-    const { image, setShowHeader } = useContext(UserContext);
+    const { image, setShowHeader, id } = useContext(UserContext);
     const navigate = useNavigate();
 
     function showScreen() {
@@ -44,7 +44,10 @@ const Header = () => {
                     </S.UserOptionsContainer>
 
                     {(logoutScreen ?
-                    <S.Button onClick={logout}>Logout</S.Button> 
+                    <S.DropDownContainer>
+                        <p onClick={logout}>Logout</p>
+                        <p onClick={() => navigate(`/user/${id}`)}>Meu perfil</p>
+                    </S.DropDownContainer>
                     : <></>)}
                      
                     

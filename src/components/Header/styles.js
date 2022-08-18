@@ -69,10 +69,9 @@ export const HeaderContainer = styled.div`
   justify-content: center;
 `;
 
-export const Button = styled.button`
+export const DropDownContainer = styled.div`
   font-family: "Lato";
   padding: 12px;
-  height: 45px;
   font-size: 17px;
   font-weight: 700;
   color: white;
@@ -80,6 +79,14 @@ export const Button = styled.button`
   border-radius: 0px 0px 0px 20px;
   position: absolute;
   width: 110%;
-  bottom: -53px;
+  top: 60px;
   right: -16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin-top:8px; 
+    cursor: pointer;
+  }
 `;
