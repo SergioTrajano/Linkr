@@ -5,11 +5,14 @@ import UserContext from "../../context/userContext.js";
 import SendPostCard from "./UserPublish/index.jsx";
 import * as S from "./style";
 import Trending from "./Trending/index.jsx";
+import useInterval from "use-interval";
+import Load from "../Load/index.jsx";
 
 const Timeline = () => {
     const { token, id } = useContext(UserContext);
     const [posts, setPosts] = useState("");
     const [followsCount, setFollowsCount] = useState("");
+    const [dbPosts, setDbPosts] = useState("");
 
     async function getPosts() {
         const config = {
@@ -70,8 +73,9 @@ const Timeline = () => {
     }, [id, token]);
 
     function renderPosts() {
-        if (followsCount === 0) {
-            return <span>You don't follow anyone yet. Search for new friends!</span>
+        if (!posts) return <span>Loading...</span>;
+        if (followsCount === 0 && posts.length === 0) {
+            return <span>You don't follow anyone yet and you didn't post anything. Search for new friends or post something!</span>
         }
         if (posts.length) {
             const timeline = posts.map(
@@ -107,8 +111,21 @@ const Timeline = () => {
             return timeline;
         }
         if (!posts.length) return <span>No posts found from your friends</span>;
-        return <span>Loading...</span>;
     }
+
+    useInterval(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        const promise =  axios.get(
+            `${process.env.REACT_APP_API_BASE_URL}/posts`,
+            config
+        );
+        promise.then(res => setDbPosts(res.data));
+    }, 15000);
+
     return (
             <S.Main>
                 <S.UserData>
@@ -117,8 +134,9 @@ const Timeline = () => {
                 <S.ContentContainer>
                     <S.PostsContainer>
                         <S.UserPublishContainer>
-                            <SendPostCard getPosts={getPosts} />
+                            <SendPostCard posts={posts}  setPosts={setPosts} dbPosts={dbPosts} setDbPosts={setDbPosts}/>
                         </S.UserPublishContainer>
+                            <Load posts={posts} dbPosts={dbPosts} getPosts={getPosts}/>
                         {renderPosts()}
                     </S.PostsContainer>
                     <S.SidebarContainer>
