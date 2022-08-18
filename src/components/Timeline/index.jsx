@@ -7,8 +7,9 @@ import * as S from "./style";
 import Trending from "./Trending/index.jsx";
 
 const Timeline = () => {
-    const { token } = useContext(UserContext);
+    const { token, id } = useContext(UserContext);
     const [posts, setPosts] = useState("");
+    const [followsCount, setFollowsCount] = useState("");
 
     async function getPosts() {
         const config = {
@@ -38,13 +39,13 @@ const Timeline = () => {
                 Authorization: `Bearer ${token}`,
             },
         };
-            const result = axios.get(
-                `${process.env.REACT_APP_API_BASE_URL}/posts`,
-                config
-            );
-           result.then((res) => {
-            setPosts(res.data);
-           });
+        const result = axios.get(
+            `${process.env.REACT_APP_API_BASE_URL}/posts`,
+            config
+        );
+        result.then((res) => {
+        setPosts(res.data);
+        });
         result.catch((e) => {
             alert(
                 "An error occured while trying to fetch the posts, please refresh the page"
@@ -53,7 +54,25 @@ const Timeline = () => {
         });
     }, [token]);
 
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/follows/${id}`, config);
+        promise.then(res => {
+            setFollowsCount(res.data);
+        });
+        promise.catch(e => {
+            console.log(e);
+        })
+    }, [id, token]);
+
     function renderPosts() {
+        if (followsCount === 0) {
+            return <span>You don't follow anyone yet. Search for new friends!</span>
+        }
         if (posts.length) {
             const timeline = posts.map(
                 ({
@@ -87,22 +106,21 @@ const Timeline = () => {
             );
             return timeline;
         }
-        if (posts === []) return <span>There are no posts yet</span>;
+        if (!posts.length) return <span>No posts found from your friends</span>;
         return <span>Loading...</span>;
     }
     return (
             <S.Main>
+                <S.UserData>
+                    <h1>timeline</h1>
+                </S.UserData>
                 <S.ContentContainer>
                     <S.PostsContainer>
-                        <S.UserData>
-                            <h1>timeline</h1>
-                        </S.UserData>
                         <S.UserPublishContainer>
-                        <SendPostCard getPosts={getPosts} />
+                            <SendPostCard getPosts={getPosts} />
                         </S.UserPublishContainer>
                         {renderPosts()}
                     </S.PostsContainer>
-                    
                     <S.SidebarContainer>
                         <Trending />
                     </S.SidebarContainer>

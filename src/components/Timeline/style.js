@@ -82,6 +82,15 @@ export const PostsContainer = styled.div`
         text-decoration: none;
         color: var(--secondary-color)
     }
+
+    > span {
+        margin-Top: 100px;
+        color: #FFFFFF;
+        width: 611px;
+        max-width: 100vw;
+        font-size: 50px;
+    }
+
     @media ${device.sidebar} {
         margin-right: 25px;
     }

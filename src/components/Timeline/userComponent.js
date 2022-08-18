@@ -187,17 +187,16 @@ export default function User() {
     return (
         <>
             <S.Main>
-            <S.UserData>
-                <h1>{userData ? userData.username + "'s posts" : ""}</h1>
-                {buttonFollowing}
-            </S.UserData>
+                <S.UserData>
+                    <h1>
+                        {userData ? userData.username + "'s posts" : ""}
+                    </h1>
+                    {buttonFollowing}
+                </S.UserData>
                 <S.ContentContainer>
-                
                     <S.PostsContainer>
-                        
                         {renderPosts()}
                     </S.PostsContainer>
-                    
                     <S.SidebarContainer>
                         <Trending />
                     </S.SidebarContainer>
