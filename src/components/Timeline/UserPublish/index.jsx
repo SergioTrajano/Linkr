@@ -3,7 +3,7 @@ import axios from "axios";
 import * as S from "./styles";
 import UserContext from "../../../context/userContext.js";
 
-export default function SendPostCard({ getPosts }) {
+export default function SendPostCard({ posts, setPosts, dbPosts, setDbPosts }) {
     const { image, token } = useContext(UserContext);
     const [url, setUrl] = useState("");
     const [article, setArticle] = useState("");
@@ -22,12 +22,13 @@ export default function SendPostCard({ getPosts }) {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            await axios.post(
+            const result = await axios.post(
                 `${process.env.REACT_APP_API_BASE_URL}/posts`,
                 post,
                 config
             );
-            await getPosts();
+            setPosts([result.data, ...posts]);
+            setDbPosts([result.data, ...dbPosts]);
             setLoading(false);
             setUrl("");
             setArticle("");
