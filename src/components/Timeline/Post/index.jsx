@@ -348,6 +348,7 @@ const Modal = styled.div`
 
     > div {
         width: 597px;
+        max-width: 100vw;
         height: 267px;
         background-color: #333333;
         display: flex;
@@ -358,22 +359,25 @@ const Modal = styled.div`
 
         p {
             font-family: var(--primary-font);
-            font-size: 34px;
-            line-height: 38px;
+            font-size: 3.3vh;
+            line-height: 3.7vh;
             font-weight: bold;
             color: var(--secondary-color);
             margin-bottom: 20px;
             text-align: center;
+            width: 300px;
+            max-width: 80vw;
         }
 
         > div {
             display: flex;
             justify-content: space-between;
             width: 300px;
+            max-width: 100vw;
 
             > button {
                 width: 134px;
-                height: 37px;
+                max-width: 40vw;
                 border-radius: 5px;
                 border: none;
                 font-size: 18px;
