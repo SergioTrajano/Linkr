@@ -30,7 +30,7 @@ export default function PostCard({
     numberComments
 }) {
 
-    const { token, name } = useContext(UserContext);
+    const { token, name } = useContext(UserContext)
     const [bodyValue, setBodyValue] = useState(article);
     const [originalBody, setOriginalBody] = useState(article);
     const [textEdit, setTextEdit] = useState(false);
