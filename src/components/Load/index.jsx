@@ -1,6 +1,5 @@
 import * as S from "./style";
-import Vector from "../../assets/Vector.png"
-import { useState } from "react";
+import Vector from "../../assets/Vector.png";
 
 export default function Load({posts, dbPosts, getPosts}){
 
