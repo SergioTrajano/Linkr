@@ -15,6 +15,7 @@ const Timeline = () => {
     const [posts, setPosts] = useState("");
     const [followsCount, setFollowsCount] = useState("");
     const [dbPosts, setDbPosts] = useState("");
+    const [control , setControl]=useState()
    
 
     async function getPosts() {
@@ -30,6 +31,10 @@ const Timeline = () => {
             );
            
             setPosts(result.data);
+            const page = Math.ceil(result.data.length/10)
+
+
+            
 
         } catch (e) {
             alert(
@@ -128,8 +133,10 @@ const Timeline = () => {
         );
         promise.then(res => setDbPosts(res.data));
     }, 15000);
+
+
   
-    function PaginatedItems() {
+{/*function PaginatedItems() {
       
         const [currentItems, setCurrentItems] = useState(null);
         const [pageCount, setPageCount] = useState(0);
@@ -166,17 +173,18 @@ const Timeline = () => {
               />
             </>
           );
-        }
-function scroll(){
+        }*/}
+{/*function scroll(){
     <InfiniteScroll
     pageStart={0}
     loadMore={getPosts()}
-    hasMore={true || false}
+    hasMore={control}
     loader={<div className="loader" key={0}>Loading ...</div>}
 >
     {posts} 
    </InfiniteScroll>
-}
+   
+}*/}
 
     return (
             <S.Main>
@@ -189,8 +197,9 @@ function scroll(){
                             <SendPostCard posts={posts}  setPosts={setPosts} dbPosts={dbPosts} setDbPosts={setDbPosts}/>
                         </S.UserPublishContainer>
                             <Load posts={posts} dbPosts={dbPosts} getPosts={getPosts}/>
-                        <PaginatedItems/>
-                        {scroll()}
+                       {/* <PaginatedItems/>*/}
+                       {/* {scroll()}*/}
+                       {renderPosts()}
                     </S.PostsContainer>
                     <S.SidebarContainer>
                         <Trending />
