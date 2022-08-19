@@ -8,7 +8,7 @@ import Trending from "./Trending/index.jsx";
 
 const Timeline = () => {
     const { token } = useContext(UserContext);
-    const [posts, setPosts] = useState("");
+    const [posts, setPosts] = useState("")
 
     async function getPosts() {
         const config = {
