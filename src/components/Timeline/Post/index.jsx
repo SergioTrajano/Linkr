@@ -213,7 +213,7 @@ export default function PostCard({
     function postComment(){
         setCommentInput("")
         if(commentInput){
-            axios.post(`${process.env.REACT_APP_API_BASE_URL}/comments/${postId}`,config,commentInput)
+            axios.post(`${process.env.REACT_APP_API_BASE_URL}/comments/${postId}`,{text:commentInput},config)
             .then(()=>apiComments())
             .catch(e=>alert(e.response.data))
         }
@@ -249,11 +249,11 @@ export default function PostCard({
 
                 <ProfilePhoto>
                     <img src={pictureURL} alt={legendAlt} />
+                    <Flex>
                     <div className="animation" onClick={postLike}>
                         <Lottie
+                            style={{color:'white'}}
                             options={likeDefaultOptions}
-                            height={65}
-                            width={60}
                             direction={animationLikeState.direction}
                             isStopped={animationLikeState.isStopped}
                         />
@@ -265,8 +265,12 @@ export default function PostCard({
                     <h6>{like} likes</h6>
                     </span>
                     <ReactTooltip />
-                    <AiOutlineComment onClick={apiComments}/>
+                    </Flex>
+                    
+                    <Flex onClick={apiComments}>
+                    <AiOutlineComment style={{ color: "#ffffff", fontSize: "35px" }} />
                     <h6>{numberComments} comments</h6>
+                    </Flex>
                 </ProfilePhoto>
 
                 <S.PostContentContainer>
@@ -330,39 +334,37 @@ export default function PostCard({
                                 </S.PostLinkContent>
                                 <S.PostLinkImage src={urlImage} alt={urlTitle}/>
                         </S.PostLinkPreviewContainer>
-
-                        {(commentScreen ? (
+                </S.PostContentContainer>
+                            
+            </S.PostContainer >
+            {(commentScreen ? (
                         <AllComments>
                             {comments.map(e=>
                             <Comment>
                                <img src={e.pictureURL} /> 
                                 <CommentText>
-                                    <span> 
-                                        {e.username} {e.username===username ? <>• post's author</> : <></>} 
-                                    </span>
+                                    <div> 
+                                        {e.username} {e.username===username ? <span>• post's author</span> : <></>} 
+                                    </div>
                                     <p> {e.text} </p>
                                 </CommentText>
                             </Comment>
                             )}
-                            <WriteComment >
+                            <Comment >
                             <img src={pictureURL} /> 
-                                <CommentText>
+                                <WriteComment>
                                     <input 
                                     type='text'
                                     placeholder='write a comment...'
                                     value={commentInput}
-                                    onChange={(e)=>setCommentInput([...commentInput,e.target.value])} />
-                                    <IoPaperPlaneOutline onClick={postComment} />
-                                </CommentText>
-                            </WriteComment>
+                                    onChange={(e)=>setCommentInput(e.target.value)} />
+                                    <IoPaperPlaneOutline color={'white'} onClick={postComment} />
+                                </WriteComment>
+                            </Comment>
                         </AllComments>
                         )
                         : <></>
                         )}
-                </S.PostContentContainer>
-
-            </S.PostContainer >
-
         </S.Wrapper>
     </>
     );
@@ -371,8 +373,7 @@ export default function PostCard({
 
 const ProfilePhoto = styled.div`
 height: 100%;
-
-    cursor: pointer;
+cursor: pointer;
     img {
         width: 58px;
         height: 58px;
@@ -380,10 +381,13 @@ height: 100%;
         object-fit: cover;
     }
     h6 {
-        color: #b6b6b6;
+        color: #ffffff;
         text-align: center;
+        font-size: 12px;
     }
-    
+    @media (max-width:611px){
+        width:50px
+    }
 `;
 
 const Modal = styled.div`
@@ -447,11 +451,9 @@ const Modal = styled.div`
     }
 `
 const AllComments=styled.div`
-    display: flex;
-    flex-direction: column;
     background-color:#1E1E1E;
     border-radius: 16px;
-    padding: 20px;
+    padding: 0 20px;
     width: 100%;
 `
 const Comment=styled.div`
@@ -459,26 +461,51 @@ const Comment=styled.div`
     width: 100%;
     border-bottom: 1px solid #353535;
     display:flex;
-    justify-content: start;
+    align-items: center;
+;
     img{
         height: 40px;
         width: 40px;
         border-radius: 50%;
+        margin-right:17px;
     }
 `
 const WriteComment=styled.div`
-    height: 70px;
-    width: 100%;
-    display:flex;
-    justify-content: start;
-    img{
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
+    background-color:#252525;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 40px;
+    border-radius: 8px;
+    width: 90%;
+    font-size: 14px;
+    input{
+        background-color:#252525;
+        font-style: italic;
     }
+    input::placeholder{
+        color: #575757;
+    }
+;
 `  
 const CommentText=styled.div`
     width: 90%;
-    background-color: #252525;
+    background-color:#1E1E1E;
+    color:#f3f3f3;
+    font-size: 14px;
+    p{
+        color: #ACACAC;
+        margin-top: 2px;
+    }
+    span{
+        color:#565656;
+    }
 `
-
+const Flex=styled.div`
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+`

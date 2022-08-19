@@ -47,7 +47,7 @@ export default function SendPostCard({ getPosts }) {
 
     return (
      
-        <S.BoxPublish>
+    <S.BoxPublish>
         <S.Container>
             <S.Data>
                 <S.ImageUser>
