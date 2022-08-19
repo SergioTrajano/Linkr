@@ -7,12 +7,15 @@ import * as S from "./style";
 import Trending from "./Trending/index.jsx";
 import useInterval from "use-interval";
 import Load from "../Load/index.jsx";
+import ReactPaginate from "react-paginate";
+import InfiniteScroll from 'react-infinite-scroller';
 
 const Timeline = () => {
     const { token, id } = useContext(UserContext);
     const [posts, setPosts] = useState("");
     const [followsCount, setFollowsCount] = useState("");
     const [dbPosts, setDbPosts] = useState("");
+   
 
     async function getPosts() {
         const config = {
@@ -125,6 +128,55 @@ const Timeline = () => {
         );
         promise.then(res => setDbPosts(res.data));
     }, 15000);
+  
+    function PaginatedItems() {
+      
+        const [currentItems, setCurrentItems] = useState(null);
+        const [pageCount, setPageCount] = useState(0);
+        const [itemOffset, setItemOffset] = useState(0);
+        const itemsPerPage=10;
+      
+        useEffect(() => {
+        
+          const endOffset = itemOffset + itemsPerPage;
+        //  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+          setCurrentItems(posts.slice(itemOffset, endOffset));
+          setPageCount(Math.ceil(posts.length / itemsPerPage));
+        }, [itemOffset, itemsPerPage]);
+      
+        
+        const handlePageClick = (event) => {
+          const newOffset = (event.selected * itemsPerPage) % posts.length;
+          console.log(
+            `User requested page number ${event.selected}, which is offset ${newOffset}`
+          );
+          setItemOffset(newOffset);
+        };
+        return (
+            <>
+             {renderPosts()}
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+              />
+            </>
+          );
+        }
+function scroll(){
+    <InfiniteScroll
+    pageStart={0}
+    loadMore={getPosts()}
+    hasMore={true || false}
+    loader={<div className="loader" key={0}>Loading ...</div>}
+>
+    {posts} 
+   </InfiniteScroll>
+}
 
     return (
             <S.Main>
@@ -137,7 +189,8 @@ const Timeline = () => {
                             <SendPostCard posts={posts}  setPosts={setPosts} dbPosts={dbPosts} setDbPosts={setDbPosts}/>
                         </S.UserPublishContainer>
                             <Load posts={posts} dbPosts={dbPosts} getPosts={getPosts}/>
-                        {renderPosts()}
+                        <PaginatedItems/>
+                        {scroll()}
                     </S.PostsContainer>
                     <S.SidebarContainer>
                         <Trending />
