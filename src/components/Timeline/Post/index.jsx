@@ -25,7 +25,10 @@ export default function PostCard({
     pictureURL,
     likes,
     postId,
-    getPosts,
+    posts,
+    setPosts,
+    dbPosts,
+    setDbPosts
 }) {
 
     const { token, id } = useContext(UserContext);
@@ -202,7 +205,8 @@ export default function PostCard({
                         setIsDeleting(true);
                         const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/posts/${postId}`, config);
                         promise.then(() => {
-                            getPosts();
+                            setPosts(posts.filter(c => c.postId !== postId));
+                            setDbPosts(dbPosts.filter(c => c.postId !== postId))
                             setModalDisplay("none");
                             setIsDeleting(false);
                         });
@@ -222,7 +226,7 @@ export default function PostCard({
 
                 <ProfilePhoto>
                     <img src={pictureURL} alt={legendAlt} />
-                    <div className="animation" onClick={postLike}>
+                    <div className="animation" onClick={() => {if (creatorId !== id) postLike()}}>
                         <Lottie
                             options={likeDefaultOptions}
                             height={65}

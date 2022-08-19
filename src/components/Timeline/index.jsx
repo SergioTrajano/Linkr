@@ -105,6 +105,9 @@ const Timeline = () => {
                         setPosts={setPosts}
                         getPosts={getPosts} 
                         likes={likes}
+                        posts={posts}
+                        dbPosts={dbPosts}
+                        setDbPosts={setDbPosts}
                     />
                 )
             );

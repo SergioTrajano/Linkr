@@ -9,7 +9,7 @@ import UserContext from "../../../context/userContext";
 
 // eslint-disable-next-line no-unused-vars
 const SearchBar = () => {
-    const { token, id } = useContext(UserContext);
+    const { token, id, setShowHeader } = useContext(UserContext);
     const [serachResult, setSearchResult] = useState([]);
 
  
@@ -42,7 +42,7 @@ const SearchBar = () => {
                 <AiOutlineSearch className="search-icon" />
             </S.SearchBarContainerInput>
             <S.SearchBarDataResult>
-                {serachResult.length ? serachResult.map((c, i) => <Link key={i} to={`/user/${c.id}`} onClick={() => setSearchResult([])}>
+                {serachResult.length ? serachResult.map((c, i) => <Link key={i} to={`/user/${c.id}`} onClick={() => {setSearchResult([]); setShowHeader(false)}}>
                     <S.UserImage src={`${c.pictureURL}`}></S.UserImage>
                     <p>{c.username} {c.isFollowing ? <span>• following</span> : ""}</p>
 
