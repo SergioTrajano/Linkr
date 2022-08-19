@@ -11,10 +11,11 @@ export default function User() {
     const userId = parseInt(useParams().id);
     const [userPosts, setUserPosts] = useState([]);
     const [userData, setUserData] = useState("");
-    const { token, id } = useContext(UserContext);
+    const { token, id, setShowHeader } = useContext(UserContext);
     const [buttonFollowing, setBUttonFollowing] = useState(userId === id ? "" : "Loading...");
     const [isDisabled, setIsDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    setShowHeader(true);
     
     useEffect(() => {
         const config = {
